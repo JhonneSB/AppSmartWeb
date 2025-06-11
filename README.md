@@ -1,7 +1,6 @@
 
-<p align="center">
-  #AppSmartWeb
-</p>
+<h3 align="center">Bancada Smart 4.0 Web</h3>
+
 <h3 align="center">Projeto Integrador - SENAI | Desenvolvimento de Sistemas</h3>
 
 <p align="center">🚀 Sistema de Acompanhamento de Pedidos com Integração à Bancada Smart 4.0</p>
