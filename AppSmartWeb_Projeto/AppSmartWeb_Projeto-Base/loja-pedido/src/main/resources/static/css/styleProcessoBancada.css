@@ -1,0 +1,465 @@
+/* ----------------------------------------
+    Reset e configurações globais
+---------------------------------------- */
+
+
+:root {
+    --azul-primario: #1565c0;
+    --azul-secundario: #0d47a1;
+    --azul-escuro: #002b45;
+    --azul-medio: #003e60;
+    --azul-claro: #dceffb;
+    --branco: #ffffff;
+    --cinza: #757575;
+}
+
+
+
+html {
+    font-size: 25px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #002654, #004080);
+    color: #f5f5f5;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ----------------------------------------
+    Cabeçalho
+---------------------------------------- */
+header {
+    width: 100%;
+    background-color: #004aad;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.left-header img {
+    height: 50px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.right-header img {
+    height: 34px;
+}
+
+/* ----------------------------------------
+    Tipografia
+---------------------------------------- */
+h1,
+h2,
+h3 {
+    text-align: center;
+    color: #ffffff;
+    margin: 0;
+}
+
+h1 {
+    margin-top: 10px;
+}
+
+h2,
+h3 {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+/* ----------------------------------------
+    Botões
+---------------------------------------- */
+button {
+    margin-top: 10px;
+    height: 40px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007aff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #005dc1;
+    transform: scale(1.05);
+}
+
+/* ----------------------------------------
+    Tabela
+---------------------------------------- */
+table {
+    border-collapse: collapse;
+    width: 188px;
+    margin-top: 10px;
+}
+
+th,
+td {
+    background-color: #003366;
+    border: 1px solid #005dc1;
+    padding: 10px;
+    text-align: center;
+}
+
+/* ----------------------------------------
+    Barras de progresso
+---------------------------------------- */
+.barras-container {
+    width: 80%;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.barra-container {
+    background-color: #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.barra-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.barra-preenchida,
+#barraPrincipal,
+#barraSecundaria {
+    width: 0%;
+    height: 30px;
+    background-color: #4CAF50;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    line-height: 30px;
+    transition: width 0.4s ease;
+}
+
+/* ----------------------------------------
+    Texto de etapa
+---------------------------------------- */
+.etapa-texto,
+#etapa-texto {
+    font-style: italic;
+    margin-bottom: 5px;
+    color: #d0d0d0;
+}
+
+/* ----------------------------------------
+    Containers e layout
+---------------------------------------- */
+.bancada-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2px;
+    flex-wrap: nowrap;
+}
+
+.bancada-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Descrição dinâmica */
+.descricao-dinamica,
+#descricao-dinamica {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    width: 80%;
+    text-align: center;
+}
+
+/* ----------------------------------------
+    Responsivo
+---------------------------------------- */
+@media (max-width: 1024px) {
+    html {
+        font-size: 22px;
+    }
+
+    .bancada-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Botão Voltar - Flutuante acima do Corrigir Estoque */
+.btn-voltar-flutuante {
+    position: fixed;
+    right: 20px;
+    bottom: 25px;
+    /* Posicionado acima do botão de estoque */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--azul-primario), var(--azul-secundario));
+    border-radius: 50px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 101;
+    /* Um nível acima do botão de estoque */
+}
+
+.estoque-btn {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    z-index: 100;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+
+button {
+    margin-top: 16px;
+    padding: 12px 24px;
+    font-size: 16px;
+    background: linear-gradient(135deg, var(--azul-primario), var(--azul-secundario));
+    color: var(--branco);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:hover {
+    background: linear-gradient(135deg, var(--azul-secundario), var(--azul-primario));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para os botões no container principal - mantendo o mesmo tamanho */
+.button-group button {
+    background: linear-gradient(135deg, var(--azul-primario), var(--azul-secundario));
+    color: var(--branco);
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    margin: 0;
+    /* Remove a margem padrão para controle mais preciso */
+}
+
+.button-group button:hover {
+    background: linear-gradient(135deg, var(--azul-secundario), var(--azul-primario));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo específico para manter o alinhamento e espaçamento */
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+/* CABEÇALHO */
+header {
+    background-color: var(--azul-primario);
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.left-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.left-header img {
+    height: 50px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--branco);
+}
+
+.right-header img {
+    height: 34px;
+}
+
+.progress-shopee {
+    margin: 40px auto;
+    padding: 30px 25px;
+    max-width: 960px;
+    background-color: #001f3f;
+    /* azul escuro */
+    border-radius: 16px;
+    color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.progress-title {
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: 35px;
+    color: #00aaff;
+    /* azul claro Senai */
+}
+
+.progress-subtitle {
+    margin-top: 50px;
+    font-size: 1.2rem;
+    color: #66ccff;
+    /* azul suave */
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.progress-stepper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 0 15px;
+    margin-top: 10px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    position: relative;
+    min-width: 120px;
+}
+
+.step::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: -50%;
+    width: 100%;
+    height: 4px;
+    background-color: #4a6fa5;
+    /* azul médio para trilha */
+    z-index: 0;
+}
+
+.step:last-child::after {
+    display: none;
+}
+
+.circle {
+    width: 48px;
+    height: 48px;
+    background-color: #b0c4de;
+    /* azul claro acinzentado */
+    border-radius: 50%;
+    font-size: 22px;
+    color: #001f3f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    font-weight: bold;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.step.completed .circle {
+    background-color: #007acc;
+    /* azul Senai ativo */
+    color: white;
+}
+
+.step.active .circle {
+    background-color: #005fa3;
+    /* azul escuro ativo */
+    color: white;
+}
+
+.step p {
+    font-size: 0.9rem;
+    max-width: 120px;
+    line-height: 1.3;
+    color: #cfd8dc;
+}
+
+.etapa-texto {
+    margin: 20px auto 0;
+    font-size: 1rem;
+    color: #ffffff;
+    text-align: center;
+    background-color: #0d2a4d;
+    padding: 14px 18px;
+    border-radius: 10px;
+    max-width: 600px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    height: 3.25rem;
+}
+
+.left-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* 14px */
+  }

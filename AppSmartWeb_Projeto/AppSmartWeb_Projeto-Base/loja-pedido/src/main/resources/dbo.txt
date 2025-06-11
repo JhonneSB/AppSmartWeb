@@ -1,0 +1,7 @@
+CREATE TABLE Block (
+    Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    Position INT NOT NULL,
+    Color INT NOT NULL,
+    StorageId INT NOT NULL,
+    ProductionOrder VARCHAR(255)
+);

@@ -1,0 +1,239 @@
+/* Estilos específicos para a lista de pedidos */
+.pedidos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.pedido-card {
+    background: linear-gradient(135deg, #1a4b8c, #0d3a70);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--azul-primario);
+}
+
+.pedido-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pedido-header h3 {
+    margin: 0;
+    color: var(--branco);
+    font-size: 18px;
+}
+
+.pedido-tipo {
+    background-color: var(--azul-primario);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.blocos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.bloco-item {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    border-radius: 6px;
+    border-left: 3px solid var(--azul-primario);
+}
+
+.bloco-item h4 {
+    margin: 0 0 8px 0;
+    color: var(--branco);
+    font-size: 16px;
+}
+
+.laminas-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 10px 0 5px 0;
+    color: var(--branco);
+    font-size: 14px;
+}
+
+.laminas-detalhes {
+    margin-top: 10px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.lamina-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+    font-size: 14px;
+    color: var(--branco);
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.lamina-item:last-child {
+    border-bottom: none;
+}
+
+.lamina-item .material-symbols-rounded {
+    font-size: 18px;
+}
+
+.lamina-padrao {
+    font-style: italic;
+    opacity: 0.8;
+    margin-left: 5px;
+}
+
+.btn-excluir {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-excluir:hover {
+    background-color: rgba(231, 76, 60, 0.3);
+}
+
+.sem-pedidos {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.sem-pedidos .material-symbols-rounded {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.sem-pedidos p {
+    margin: 0;
+    font-size: 18px;
+}
+
+.botoes-acoes {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-voltar {
+    padding: 10px 20px;
+    background-color: var(--azul-primario);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-voltar:hover {
+    background-color: var(--azul-secundario);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    height: 3.25rem;
+}
+
+.left-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* 14px */
+  }
+
+/* Adaptação para mobile */
+@media (max-width: 768px) {
+    .pedidos-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .pedido-card {
+        padding: 15px;
+    }
+}
+
+/* Estilos para os botões de ação do pedido */
+.pedido-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-confirmar {
+    flex: 1;
+    padding: 10px;
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-confirmar:hover {
+    background-color: rgba(46, 204, 113, 0.3);
+}
+
+.btn-excluir {
+    flex: 1;
+    padding: 10px;
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-excluir:hover {
+    background-color: rgba(231, 76, 60, 0.3);
+}
+
+/* Adaptação para mobile */
+@media (max-width: 768px) {
+    .pedido-actions {
+        flex-direction: column;
+    }
+}
