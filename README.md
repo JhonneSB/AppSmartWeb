@@ -1,5 +1,5 @@
 
-<h3 align="center">Bancada Smart 4.0 Web</h3>
+<h1 align="center">Bancada Smart 4.0 Web</h1>
 
 <h3 align="center">Projeto Integrador - SENAI | Desenvolvimento de Sistemas</h3>
 
