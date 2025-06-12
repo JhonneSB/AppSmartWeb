@@ -80,4 +80,4 @@ Este projeto foi desenvolvido durante o curso Técnico em Desenvolvimento de Sis
 
 ---
 
-<p align="center"> Sitiuação de Aprendizagem - SA do terceiro semestre so Técnico em Desenvolvimento de Sistemas.</p>
+<p align="center"> Sitiuação de Aprendizagem - SA do terceiro semestre do Técnico em Desenvolvimento de Sistemas.</p>
