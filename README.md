@@ -3,7 +3,7 @@
 
 <h3 align="center">Projeto Integrador - SENAI | Desenvolvimento de Sistemas</h3>
 
-<p align="center">🚀 Sistema de Acompanhamento de Pedidos com Integração à Bancada Smart 4.0</p>
+<p align="center">🚀 Sistema de Realização e Acompanhamento de Pedidos com Integração à Bancada Smart 4.0</p>
 
 ---
 
