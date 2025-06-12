@@ -207,7 +207,28 @@ header h1 {
 .right-header img {
     height: 34px;
 }
-  
+/* Ícone de Wi-Fi fixo no canto superior direito */
+.wifi-fixed {
+  display: flex;
+  position: fixed; /* Fixa o ícone na tela */
+  top: 95px;      /* Distância do topo */
+  right: 20px;    /* Distância da direita */
+  font-size: 24px;
+  color: #0066cc;
+  z-index: 1000;  /* Garante que fique acima de tudo */
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid #ddd; /* Borda opcional */
+  padding: 9px;
+  border-radius: 10px;
+}
+
+.wifi-fixed:hover {
+  color: #0066cc;         /* Muda a cor */
+  width: 180px;
+  justify-content: end;
+}
+
   @media (max-width: 1024px) {
     html {
       font-size: 22px;
@@ -341,6 +362,5 @@ header h1 {
       font-size: 0.9em;
   }
   
-    
   }
   

@@ -28,5 +28,7 @@ public class dboBlockController {
     public ResponseEntity<Void> corrigirEstoque(@RequestBody List<dboBlock> blockList) {
         dboBlockService.atualizarBlocos(blockList);
         return ResponseEntity.ok().build();
+   
+   
     }
 }
