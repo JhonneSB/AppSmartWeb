@@ -82,4 +82,25 @@ function conectarBancada() {
         conectado = false;
         sessionStorage.removeItem("bancadaConectada");
     }
+    // No seu arquivo JavaScript existente
+    document.addEventListener('DOMContentLoaded', function () {
+        const wifiIcon = document.querySelector('.wifi-fixed');
+
+        // Função para atualizar o status (chame isso quando a conexão mudar)
+        function atualizarStatusWifi(conectado) {
+            if (conectado) {
+                wifiIcon.classList.add('connected');
+                wifiIcon.querySelector('.wifi-status').textContent = 'Conectado';
+            } else {
+                wifiIcon.classList.remove('connected');
+                wifiIcon.querySelector('.wifi-status').textContent = 'Desconectado';
+            }
+        }
+
+        // Exemplo: definir como desconectado inicialmente
+        atualizarStatusWifi(false);
+
+        // Quando sua função de conexão for chamada:
+        // atualizarStatusWifi(true); // Para estado conectado
+    });
 }

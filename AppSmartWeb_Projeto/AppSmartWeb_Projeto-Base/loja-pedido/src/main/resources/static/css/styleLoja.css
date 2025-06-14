@@ -39,6 +39,60 @@ header h1 {
     height: 34px;
 }
 
+.wifi-fixed {
+  position: absolute;
+  top: 95px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Ícone sempre à direita */
+  gap: 8px;
+  font-size: 24px;
+  color: #ff0000;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid #ff0000;
+  padding: 8px 12px;    
+  border-radius: 20px;
+  overflow: hidden;
+  width: 30px; /* Largura inicial (só para o ícone) */
+  height: 26px;
+  
+}
+
+.wifi-status {
+  font-size: 16px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease 0.1s;
+  order: -1; /* Texto à esquerda do ícone */
+  margin-right: auto; /* Empurra o ícone para a direita */
+}
+
+.wifi-fixed:hover {
+  width: 155px; /* Largura expandida */
+  background-color: rgba(238, 149, 149, 0.2);
+  justify-content: flex-end; /* Mantém o ícone à direita */
+}
+
+.wifi-fixed:hover .wifi-status {
+  opacity: 1;
+  margin-right: 8px; /* Espaço entre texto e ícone */
+}
+
+/* Estilo para quando estiver conectado (você pode alternar via JavaScript) */
+.wifi-fixed.connected {
+  color: #00aa00;
+  /* Verde para estado conectado */
+  border-color: #00aa00;
+}
+
+.wifi-fixed.connected:hover {
+  background-color: rgba(200, 255, 200, 0.9);
+  /* Fundo verde claro */
+}
+
 /* CORPO PRINCIPAL */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -649,20 +703,22 @@ hr {
     justify-content: center;
 }
 
-.imagem[src*="placeholder"]{
-    display: none;
-}
-.imagem[src*="padrao0"]{
+.imagem[src*="placeholder"] {
     display: none;
 }
 
-  .left-header {
+.imagem[src*="padrao0"] {
+    display: none;
+}
+
+.left-header {
     display: flex;
     align-items: center;
-    gap: 0.5rem; /* 14px */
-  }
+    gap: 0.5rem;
+    /* 14px */
+}
 
-  header {
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -673,5 +729,6 @@ hr {
 .left-header {
     display: flex;
     align-items: center;
-    gap: 0.5rem; /* 14px */
-  }
+    gap: 0.5rem;
+    /* 14px */
+}

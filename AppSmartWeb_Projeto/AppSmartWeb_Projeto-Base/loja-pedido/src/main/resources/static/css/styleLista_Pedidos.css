@@ -172,6 +172,7 @@ header {
     align-items: center;
     gap: 0.5rem; /* 14px */
   }
+  
 
 /* Adaptação para mobile */
 @media (max-width: 768px) {
@@ -236,4 +237,5 @@ header {
     .pedido-actions {
         flex-direction: column;
     }
+    
 }
