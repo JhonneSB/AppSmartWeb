@@ -7,11 +7,12 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class ClpController {
 
-    
-@PostMapping("/smart/ping")
+    @PostMapping("/smart/ping")
     public Map<String, Boolean> pingHosts(@RequestBody Map<String, String> ips) {
         Map<String, Boolean> resultados = new HashMap<>();
         ips.forEach((nome, ip) -> {
@@ -25,4 +26,5 @@ public class ClpController {
         return resultados;
     }
 
+    
 }

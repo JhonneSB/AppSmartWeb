@@ -11,76 +11,98 @@
 
     <!-- CABEÇALHO -->
     <header>
-        <div class="left-header">
-            <img src="fotosenai (1).png" alt="Logo Cubo">
-            <h1>Sistema de Gestão da Bancada</h1>
-        </div>
-        <div class="right-header">
-            <img src="senailogo.png" alt="Logo SENAI">
-        </div>
-       <div class="wifi-fixed">
-    <i class="fas fa-signal"></i> <!-- Ícone de barras de sinal -->
-    <span class="wifi-status">Desconectado</span>
+      <div class="left-header">
+          <img src="fotosenai (1).png" alt="Logo Cubo">
+          <h1>Sistema de Gestão da Bancada</h1>
+      </div>
+      <div class="right-header">
+          <img src="senailogo.png" alt="Logo SENAI">
+      </div>
+    </div>
+    <div class="wifi-fixed">
+ <i class="fas fa-signal"></i> <!-- Ícone de barras de sinal -->
+ <span class="wifi-status">Desconectado</span>
 </div>
-    </header>
-    
-    
+  </header>
+
   <main>
     <section class="left-panel">
       <h2><span class="bold">Bancada</span> <span class="highlight">SMART 4.0</span></h2>
       <div class="buttons">
-        <button onclick="window.location.href='/editar_clp1'">Gestão de estoque</button>
-        <button onclick="window.location.href='/pedidos'">Pedidos</button>
-        <button onclick="window.location.href='/processo_bancada'">Processo Atual</button>
+        <button onclick="window.location.href='/editar_clp1'">
+          <i class="fas fa-boxes"></i> Gestão de estoque
+        </button>
+        <button onclick="window.location.href='/pedidos'">
+          <i class="fas fa-clipboard-list"></i> Pedidos
+        </button>
+        <button onclick="window.location.href='/processo_bancada'">
+          <i class="fas fa-cogs"></i> Processo Atual
+        </button>
       </div>
-      <div class="etapas-container">
-        <div class="etapa-card">
-          <div class="etapa-conteudo">
-            <span class="etapa-title">Estoque</span>
-            <p>
-              O módulo Estoque gerencia o controle inteligente de materiais, garantindo a disponibilidade em tempo real dos componentes necessários para a produção, com sistema automatizado de reposição e rastreamento de inventário.
-            </p>
-          </div>
-        </div>
-
-        <div class="etapa-card">
-          <div class="etapa-conteudo">
-            <span class="etapa-title">Processo</span>
-            <p>
-              O módulo Processo otimiza o fluxo produtivo através da automação e monitoramento contínuo, reduzindo erros e aumentando a eficiência com dados em tempo real para tomadas de decisão ágeis.
-            </p>
-          </div>
-        </div>
-
-        <div class="etapa-card">
-          <div class="etapa-conteudo">
-            <span class="etapa-title">Montagem</span>
-            <p>
-              O módulo Montagem integra ferramentas e sistemas inteligentes que facilitam a montagem rápida e precisa, com suporte a orientação digital para operadores e verificação automática de qualidade.
-            </p>
-          </div>
-        </div>
-
-        <div class="etapa-card">
-          <div class="etapa-conteudo">
-            <span class="etapa-title">Expedição</span>
-            <p>
-              O módulo Expedição automatiza o controle de saída dos produtos, com rastreamento logístico e integração com sistemas de transporte para garantir entregas ágeis e seguras.
-            </p>
-          </div>
+    
+    <div class="conectar-wrapper">  
+      <div class="conectar-container">
+        <input type="text" class="ip-input" placeholder="Digite o IP da bancada">
+        <button class="conectar-btn">
+          <i class="fas fa-link"></i> CONECTAR
+        </button>
+      </div>
+      <div class="ip-container">
+        <span class="ip-box">192.168.1.100</span>
+        <span class="ip-box">192.168.1.100</span>
+        <span class="ip-box">192.168.1.100</span>
+        <span class="ip-box">192.168.1.100</span>
+      </div>
+    </div>
+    <div class="etapas-container">
+      <div class="etapa-card">
+        <div class="etapa-conteudo">
+          <span class="etapa-title">Estoque</span>
+          <p>
+            O módulo Estoque gerencia o controle inteligente de materiais, garantindo a disponibilidade em tempo real dos componentes necessários para a produção, com sistema automatizado de reposição e rastreamento de inventário.
+          </p>
         </div>
       </div>
-    </section>
 
-    <section class="right-panel">
-      <img th:src="@{/foto (1).png}" src="/foto (1).png" alt="Imagem da Bancada" class="bancada-img">
-    </section>
-  </main>
+      <div class="etapa-card">
+        <div class="etapa-conteudo">
+          <span class="etapa-title">Processo</span>
+          <p>
+            O módulo Processo otimiza o fluxo produtivo através da automação e monitoramento contínuo, reduzindo erros e aumentando a eficiência com dados em tempo real para tomadas de decisão ágeis.
+          </p>
+        </div>
+      </div>
 
-  <footer>
+      <div class="etapa-card">
+        <div class="etapa-conteudo">
+          <span class="etapa-title">Montagem</span>
+          <p>
+            O módulo Montagem integra ferramentas e sistemas inteligentes que facilitam a montagem rápida e precisa, com suporte a orientação digital para operadores e verificação automática de qualidade.
+          </p>
+        </div>
+      </div>
+
+      <div class="etapa-card">
+        <div class="etapa-conteudo">
+          <span class="etapa-title">Expedição</span>
+          <p>
+            O módulo Expedição automatiza o controle de saída dos produtos, com rastreamento logístico e integração com sistemas de transporte para garantir entregas ágeis e seguras.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="right-panel">
+    <img th:src="@{/foto (1).png}" src="/foto (1).png" alt="Imagem da Bancada" class="bancada-img">
+  </section>
+</main>
+<footer>
     <p>
         © 2025 Projeto desenvolvido por Miguel Augusto e Carlos Jhonne<br>
     </p>
 </footer>
+
+<script src="/js/home.js"></script>
 </body>
 </html>

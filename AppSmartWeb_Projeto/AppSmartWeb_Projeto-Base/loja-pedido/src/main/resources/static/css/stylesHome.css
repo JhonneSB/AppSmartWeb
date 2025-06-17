@@ -1,8 +1,6 @@
 /* Reset e configurações globais */
-
 html {
   font-size: 25px;
-  /* Aumenta mais a base para parecer com 175-200% de zoom */
 }
 
 * {
@@ -34,11 +32,9 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  /* 28px */
   background-color: #004aad;
   color: white;
   height: 3.25rem;
-  /* 91px */
 }
 
 header h1 {
@@ -49,12 +45,10 @@ header h1 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  /* 14px */
 }
 
 .bancada-logo {
   width: 2rem;
-  /* 56px */
   height: 2rem;
 }
 
@@ -66,7 +60,6 @@ main {
   display: flex;
   justify-content: space-between;
   padding: 2rem;
-  /* 56px */
   gap: 0.9rem;
   flex: 1;
 }
@@ -80,10 +73,8 @@ main {
 
 h2 {
   font-size: 3rem;
-  /* 84px */
   line-height: 1.2;
   margin-bottom: 1.5rem;
-  /* 42px */
 }
 
 .bold {
@@ -95,86 +86,204 @@ h2 {
   color: #2c64ff;
 }
 
-.buttons {
-  display: flex;
-  gap: 0.75rem;
-  /* 21px */
-  margin-bottom: 1.5rem;
-}
-
 .buttons button {
-  background-color: #007aff;
+  background: linear-gradient(145deg, #0088ff, #0066cc);
   color: white;
   border: none;
-  border-radius: 10px;
-  /* 42px */
-  padding: 0.75rem 1.5rem;
-  /* 21px x 42px */
-  font-size: 1rem;
-  /* 28px */
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.93rem;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+              0 1px 3px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.buttons button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #0066cc, #0088ff);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
 }
 
 .buttons button:hover {
-  background-color: #005dc1;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1),
+              0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.buttons button:hover::before {
+  opacity: 1;
+}
+
+.buttons button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.buttons button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+}
+
+/* Container principal */
+/* Container principal alinhado com as divs de processo */
+.conectar-wrapper {
+  width: 80%;
+  margin: 0.5rem 0 1.5rem 0;
+}
+
+/* Container do botão CONECTAR */
+.conectar-container {
+  display: flex;
+  justify-content: space-between; /* Alterado para espaço entre elementos */
+  align-items: center; /* Alinha verticalmente */
+  gap: 0.8rem; /* Espaço entre input e botão */
+}
+.ip-input {
+  flex: 1; /* Ocupa todo espaço disponível */
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+  font-family: 'Segoe UI', sans-serif;
+  border: 1px solid #3a74ff;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.25);
+  color: #e0e0e0;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.ip-input::placeholder {
+  color: #a0a0a0;
+  opacity: 0.8;
+}
+.conectar-btn {
+  background: linear-gradient(145deg, #007aff, #005dc1);
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 0.5rem 1.8rem 0.7rem 1.4rem;
+  font-size: 0.90rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.conectar-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #005dc1, #007aff);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.conectar-btn i {
+  font-size: 1.05rem;
+  transition: transform 0.2s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.conectar-btn span {
+  position: relative;
+  z-index: 2;
+}
+
+.conectar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Container dos IPs */
+.ip-container {
+  display: flex;
+  gap: 0.65rem; /* Espaçamento maior entre IPs */
+  padding:1.6rem 0; /* Espaçamento vertical aumentado */
+  width: 100%;
+  margin-left: 0;
+}
+
+/* Caixas de IP */
+.ip-box {
+  font-family: 'Courier New', monospace;
+  font-size: 0.70rem; /* Tamanho aumentado */
+  color: #e0e0e0; /* Cor mais clara */
+  padding: 0.9rem 0.9rem; /* Padding aumentado */
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px; /* Bordas mais arredondadas */
+  border: 1px solid #3a74ff; /* Borda mais visível */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+/* Efeito hover nos IPs */
+.ip-box:hover {
+  background-color: rgba(0, 90, 220, 0.25);
+  border-color: #5a8fff;
+  transform: translateY(-1px);
 }
 
 .etapas-container {
   display: flex;
   justify-content: space-between;
   gap: 1.0rem;
-  /* antes era 0.75rem */
-
 }
 
 .etapa-card {
   background-color: #003366;
   padding: 0.75rem;
   border-radius: 0.5rem;
-  /* 14px */
   max-width: 100%;
   min-width: 9rem;
-  /* ou mais, tipo 14rem (336px) */
-  height: 11rem;
-  /* 168px */
+  height: 10rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.2s ease;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .etapa-card:hover {
   transform: scale(1.03);
   background-color: #004080;
+  opacity: 1;
 }
 
 .etapa-title {
   font-weight: bold;
   font-size: 1rem;
-  /* 28px */
   color: #ffffff;
   margin-bottom: 0.25rem;
-  /* 7px */
 }
 
 .etapa-conteudo p {
-  font-size: 0.6rem;
-  /* 21px */
+  font-size: 0.55rem;
   color: #d0d0d0;
-}
-
-.etapa-card {
-  opacity: 0.6;
-  /* deixa meio transparente */
-  transition: opacity 0.3s ease;
-  cursor: pointer;
-  /* indica interatividade */
-}
-
-.etapa-card:hover {
-  opacity: 1;
-  /* ao passar o mouse, fica totalmente visível */
+  line-height: 1.4;
 }
 
 .right-panel {
@@ -182,32 +291,24 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  /* empurra a imagem para a direita */
   padding-right: 2rem;
-  /* opcional: ajusta ainda mais para a direita */
 }
 
 .bancada-img {
   min-width: 30rem;
-  /* aumentei de 20rem para 25rem */
   max-width: 100%;
   max-height: 100%;
   padding-left: 0;
-  /* removido para não empurrar para a esquerda */
   object-fit: contain;
 }
-
 
 footer {
   background-color: #002244;
   color: white;
   text-align: center;
   padding: 0.25rem 1rem;
-  /* 7px 28px */
   font-size: 0.5rem;
-  /* 14px */
   height: 1.5rem;
-  /* 42px */
 }
 
 header {
@@ -246,7 +347,7 @@ header h1 {
   right: 20px;
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* Ícone sempre à direita */
+  justify-content: flex-end;
   gap: 8px;
   font-size: 24px;
   color: #ff0000;
@@ -257,9 +358,8 @@ header h1 {
   padding: 8px 12px;
   border-radius: 20px;
   overflow: hidden;
-  width: 55px; /* Largura inicial (só para o ícone) */
+  width: 55px;
   height: 45px;
-  
 }
 
 .wifi-status {
@@ -267,31 +367,32 @@ header h1 {
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.2s ease 0.1s;
-  order: -1; /* Texto à esquerda do ícone */
-  margin-right: auto; /* Empurra o ícone para a direita */
+  order: -1;
+  margin-right: auto;
 }
 
 .wifi-fixed:hover {
-  width: 180px; /* Largura expandida */
+  width: 180px;
   background-color: rgba(238, 149, 149, 0.2);
-  justify-content: flex-end; /* Mantém o ícone à direita */
+  justify-content: flex-end;
 }
 
 .wifi-fixed:hover .wifi-status {
   opacity: 1;
-  margin-right: 8px; /* Espaço entre texto e ícone */
+  margin-right: 8px;
 }
 
-/* Estilo para quando estiver conectado (você pode alternar via JavaScript) */
 .wifi-fixed.connected {
   color: #00aa00;
-  /* Verde para estado conectado */
   border-color: #00aa00;
 }
 
 .wifi-fixed.connected:hover {
   background-color: rgba(200, 255, 200, 0.9);
-  /* Fundo verde claro */
+}
+
+.wifi-fixed.red {
+  color: red;
 }
 
 @media (max-width: 1024px) {
@@ -313,38 +414,27 @@ header h1 {
     flex-wrap: wrap;
     justify-content: center;
   }
+  
+  .conectar-container {
+    margin: 0.75rem 0;
+  }
 }
 
 @media (min-height: 1000px) {
   .etapa-card {
     height: 15rem;
-    /* 168px */
   }
 
   .etapa-conteudo p {
     font-size: 0.7rem;
-    /* 21px */
-
   }
 
   .bancada-img {
     min-width: 34rem;
-    /* aumentei de 20rem para 25rem */
-    max-width: 100%;
-    max-height: 100%;
-    padding-left: 0;
-    /* removido para não empurrar para a esquerda */
-    object-fit: contain;
   }
 
   .right-panel {
-    flex: 1.8;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    /* empurra a imagem para a direita */
     padding-right: 3rem;
-    /* opcional: ajusta ainda mais para a direita */
   }
 }
 
@@ -386,6 +476,17 @@ header h1 {
     align-items: center;
     gap: 1rem;
   }
+  
+  .ip-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .ip-container span {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 @media (max-width: 480px) {
@@ -412,13 +513,10 @@ header h1 {
   }
 
   footer {
-    background-color: #f5f5f5;
-    padding: 15px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    color: #555;
-    margin-top: 20px;
-    border-top: 1px solid #e0e0e0;
+    background-color: transparent;
+    padding: 0.5rem;
+    font-size: 0.6rem;
+    margin-top: auto;
   }
 
   .senai {
@@ -434,5 +532,13 @@ header h1 {
     font-weight: bold;
     font-size: 0.9em;
   }
-
+  
+  .conectar-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.7rem;
+  }
+  
+  .ip-container span {
+    font-size: 0.5rem;
+  }
 }
