@@ -1,0 +1,192 @@
+private final Map<String, String> leiturasCache = new ConcurrentHashMap<>();
+    private final ScheduledExecutorService leituraExecutor = Executors.newScheduledThreadPool(4);
+    private final Map<String, ScheduledFuture<?>> leituraFutures = new ConcurrentHashMap<>();
+
+    private static byte[] dadosClp1;
+    private static byte[] dadosClp2;
+    private static byte[] dadosClp3;
+    private static byte[] dadosClp4;
+
+
+
+@PostMapping("/start-leituras")
+    public ResponseEntity<String> startLeituras(@RequestBody Map<String, String> ips) {
+        ips.forEach((nome, ip) -> {
+            if (!leituraFutures.containsKey(nome)) {
+                PlcConnector plcConnector = PlcConnectionManager.getConexao(ip);
+                if (plcConnector == null) {
+                    System.err.println("Erro ao obter conexão com o CLP: " + ip);
+                    return; // ignora esse CLP e continua com os demais
+                }
+
+                PlcReaderTask task = null;
+                switch (nome.toLowerCase()) {
+                    case "estoque" -> task = new PlcReaderTask(plcConnector, nome, 9, 0, 111, dados -> {
+                            ClpController.dadosClp1 = dados;
+                            smartService.clpEstoque(ip, dados);
+                            atualizarCache("estoque", dados);
+                        });
+
+                    case "processo" -> task = new PlcReaderTask(plcConnector, nome, 2, 0, 9, dados -> {
+                            ClpController.dadosClp2 = dados;
+                            smartService.clpProcesso(ip, dados);
+                            atualizarCache("processo", dados);
+                        });
+
+                    case "montagem" -> task = new PlcReaderTask(plcConnector, nome, 57, 0, 9, dados -> {
+                            ClpController.dadosClp3 = dados;
+                            smartService.clpMontagem(ip, dados);
+                            atualizarCache("montagem", dados);
+                        });
+
+                    case "expedicao" -> task = new PlcReaderTask(plcConnector, nome, 9, 0, 48, dados -> {
+                            ClpController.dadosClp4 = dados;
+                            smartService.clpExpedicao(ip, dados);
+                            atualizarCache("expedicao", dados);
+                        });
+
+                    default -> {
+                        System.err.println("Nome de CLP inválido: " + nome);
+                        return;
+                    }
+                }
+
+                if (task != null) {
+                    ScheduledFuture<?> future = leituraExecutor.scheduleAtFixedRate(task, 0, 800, TimeUnit.MILLISECONDS);
+                    leituraFutures.put(nome, future);
+                }
+            }
+        });
+
+        return ResponseEntity.ok("Leituras com PlcReaderTask iniciadas.");
+    }
+
+
+
+
+
+
+@PostMapping("/stop-leituras")
+    public ResponseEntity<String> stopLeituras() {
+        leituraFutures.forEach((nome, future) -> {
+            future.cancel(true);
+            System.out.println("Thread de leitura '" + nome + "' cancelada.");
+        });
+        leituraFutures.clear();
+        PlcConnectionManager.encerrarTodasAsConexoes();
+        return ResponseEntity.ok("Leituras interrompidas.");
+    }
+
+
+
+
+//---------Service----------
+
+public class PlcConnectionManager {
+
+        private static final Map<String, PlcConnector> conexoes = new ConcurrentHashMap<>();
+
+        public static synchronized PlcConnector getConexao(String ip) {
+
+            PlcConnector connector = conexoes.get(ip);
+            if (connector == null) {
+                System.out.println("=============================");
+                System.out.println("NOVA CONEXÃO COM O CLP: " + ip);
+                System.out.println("=============================");
+                connector = new PlcConnector(ip, 102);
+                try {
+                    connector.connect();
+                    conexoes.put(ip, connector);
+                } catch (Exception e) {
+                    System.err.println("Erro ao conectar ao CLP " + ip);
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+            return connector;
+        }
+
+        public static synchronized void desconectar(String ip) {
+            PlcConnector connector = conexoes.get(ip);
+            if (connector != null) {
+                try {
+                    connector.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                conexoes.remove(ip);
+            }
+        }
+
+        public static void encerrarTodasAsConexoes() {
+
+            System.out.println("=============================");
+            System.out.println("ENCERRAR CONEXÕES COM OS CLPs");
+            System.out.println("=============================");
+            for (Map.Entry<String, PlcConnector> entry : conexoes.entrySet()) {
+                String ip = entry.getKey();
+                PlcConnector connector = entry.getValue();
+                try {
+                    if (connector != null) {
+                        connector.disconnect();
+                        //System.out.println("Conexão com " + ip + " encerrada com sucesso.");
+                    }
+                } catch (Exception e) {
+                    System.err.println("Erro ao encerrar conexão com " + ip + ": " + e.getMessage());
+                }
+            }
+            conexoes.clear();
+        }
+
+    }
+
+
+
+
+
+public void clpEstoque(String ip, byte[] dadosClp1) {
+
+	System.out.println("Estou no Estoque");
+}
+
+
+
+import java.util.function.Consumer;
+
+public class PlcReaderTask implements Runnable {
+
+    private final PlcConnector plcConnector;
+    private final String nomeClp;
+    private final int db;
+    private final int offset;
+    private final int size;
+    private final Consumer<byte[]> onDataRead;
+
+    public PlcReaderTask(PlcConnector plcConnector, String nomeClp, int db, int offset, int size, Consumer<byte[]> onDataRead) {
+        this.plcConnector = plcConnector;
+        this.nomeClp = nomeClp;
+        this.db = db;
+        this.offset = offset;
+        this.size = size;
+        this.onDataRead = onDataRead;
+    }
+
+    @Override
+    public void run() {
+        try {
+            byte[] data = plcConnector.readBlock(db, offset, size);
+            onDataRead.accept(data);
+        } catch (Exception e) {
+            System.err.println("Erro ao ler CLP " + nomeClp + ": " + e.getMessage());
+        }
+    }
+}
+
+
+private void atualizarCache(String nome, byte[] dados) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : dados) {
+            sb.append(String.format("%02X ", b));
+        }
+        leiturasCache.put(nome, sb.toString().trim());
+    }

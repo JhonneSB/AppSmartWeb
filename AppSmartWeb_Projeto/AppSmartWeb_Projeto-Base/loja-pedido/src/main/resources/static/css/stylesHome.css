@@ -233,7 +233,7 @@ h2 {
   padding: 0.9rem 0.9rem; /* Padding aumentado */
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 5px; /* Bordas mais arredondadas */
-  border: 1px solid #3a74ff; /* Borda mais visível */
+  border: 2px solid #3a74ff; /* Borda mais visível */
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   white-space: nowrap;
   transition: all 0.2s ease;
@@ -354,7 +354,7 @@ header h1 {
   z-index: 1000;
   transition: all 0.3s ease;
   cursor: pointer;
-  border: 1px solid #ff0000;
+  border: 2px solid #ff0000;
   padding: 8px 12px;
   border-radius: 20px;
   overflow: hidden;

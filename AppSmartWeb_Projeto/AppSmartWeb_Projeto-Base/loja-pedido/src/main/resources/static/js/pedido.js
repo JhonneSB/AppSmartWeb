@@ -63,7 +63,10 @@ function renderBlocos() {
                         <option value="" hidden selected>Selecione</option>
                         <option value="1">Vermelho</option>
                         <option value="2">Azul</option>
-                        <option value="3">Preto</option>
+                        <option value="3">Amarelo</option>
+                        <option value="4">Verde</option>
+                        <option value="5">Preto</option>
+                        <option value="6">Branco</option>
                     </select>
                 </div>
                 <div class="input-box">
@@ -84,7 +87,10 @@ function renderBlocos() {
                         <option value="" hidden selected>Selecione</option>
                         <option value="1">Vermelho</option>
                         <option value="2">Azul</option>
-                        <option value="3">Preto</option>
+                        <option value="3">Amarelo</option>
+                        <option value="4">Verde</option>
+                        <option value="5">Preto</option>
+                        <option value="6">Branco</option>
                     </select>
                 </div>
                 <div class="input-box">
@@ -105,7 +111,10 @@ function renderBlocos() {
                         <option value="" hidden selected>Selecione</option>
                         <option value="1">Vermelho</option>
                         <option value="2">Azul</option>
-                        <option value="3">Preto</option>
+                        <option value="3">Amarelo</option>
+                        <option value="4">Verde</option>
+                        <option value="5">Preto</option>
+                        <option value="6">Branco</option>
                     </select>
                 </div>
                 <div class="input-box">

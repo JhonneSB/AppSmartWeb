@@ -1,0 +1,91 @@
+header {
+    all: unset;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    width: 100%;
+    background-color: #1565c0;
+    color: #fff;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .left-header {
+    all: unset;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .left-header img {
+    all: unset;
+    height: 50px;
+  }
+  
+  header h1 {
+    all: unset;
+    margin: 0;
+    font-size: 25px;
+    font-weight: bold;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .right-header img {
+    all: unset;
+    height: 34px;
+  }
+  
+  .wifi-fixed {
+    all: unset;
+    position: absolute;
+    top: 105px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    font-size: 24px;
+    color: #ff0000;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #ff0000;
+    padding: 8px 12px;
+    border-radius: 20px;
+    overflow: hidden;
+    width: 55px;
+    height: 45px;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .wifi-status {
+    font-size: 16px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease 0.1s;
+    order: -1;
+    margin-right: auto;
+  }
+  
+  .wifi-fixed:hover {
+    width: 180px;
+    background-color: rgba(238, 149, 149, 0.2);
+    justify-content: flex-end;
+  }
+  
+  .wifi-fixed:hover .wifi-status {
+    opacity: 1;
+    margin-right: 8px;
+  }
+  
+  .wifi-fixed.connected {
+    color: #00aa00;
+    border-color: #00aa00;
+  }
+  
+  .wifi-fixed.connected:hover {
+    background-color: rgba(200, 255, 200, 0.9);
+  }

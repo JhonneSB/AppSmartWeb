@@ -6,6 +6,7 @@
     <title>Lista de Pedidos - SENAI</title>
     <link rel="stylesheet" th:href="@{/css/styleLoja.css}">
     <link rel="stylesheet" th:href="@{/css/styleLista_Pedidos.css}">
+    <link rel="stylesheet" th:href="@{/css/headerIsolado.css}" href="/css/headerIsolado.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
@@ -50,7 +51,16 @@
                             <div class="laminas-detalhes">
                                 <div th:each="lamina : ${bloco.laminas}" class="lamina-item">
                                     <span class="material-symbols-rounded">colorize</span>
-                                    <span th:text="${lamina.cor == '1' ? 'Vermelho' : lamina.cor == '2' ? 'Azul' : 'Preto'}"></span>
+                                    <span th:text="${
+                                        lamina.cor == '1' ? 'Vermelho' : 
+                                        lamina.cor == '2' ? 'Azul' : 
+                                        lamina.cor == '3' ? 'Amarelo' : 
+                                        lamina.cor == '4' ? 'Verde' : 
+                                        lamina.cor == '5' ? 'Preto' : 
+                                        lamina.cor == '6' ? 'Branco' : 
+                                        'Nenhuma'
+                                    }"></span>
+
                                     <span class="lamina-padrao" 
                                           th:if="${lamina.padrao != null and lamina.padrao != '0'}" 
                                           th:text="'(' + ${lamina.padrao == '1' ? 'Casa' : 
@@ -103,5 +113,8 @@
             });
         });
     </script>
+
+<script src="/js/statusConexao.js"></script>
+
 </body>
 </html>
