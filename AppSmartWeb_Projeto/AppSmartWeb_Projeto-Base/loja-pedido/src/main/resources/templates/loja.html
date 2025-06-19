@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Pedidos de Blocos</title>   
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Pedidos de Blocos</title>
     <link rel="stylesheet" th:href="@{/css/styleLoja.css}">
     <link rel="stylesheet" th:href="@{/css/headerIsolado.css}" href="/css/headerIsolado.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+
 <body>
     <!-- CABEÇALHO -->
     <header>
@@ -19,168 +22,167 @@
             <img src="senailogo.png" alt="Logo SENAI">
         </div>
         <div class="wifi-fixed">
-    <i class="fas fa-signal"></i> <!-- Ícone de barras de sinal -->
-    <span class="wifi-status">Desconectado</span>
-</div>
+            <i class="fas fa-signal"></i> <!-- Ícone de barras de sinal -->
+            <span class="wifi-status">Desconectado</span>
+        </div>
     </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
-    <div class="main-container">
-        <div class="container">
-            <h1>Pedido de Blocos</h1>
 
-            <label for="tipoPedido">Tipo de Pedido:</label>
-            <select id="tipoPedido" onchange="renderBlocos()">
-                <option value="simples">Simples (1 bloco)</option>
-                <option value="duplo">Duplo (2 blocos)</option>
-                <option value="triplo">Triplo (3 blocos)</option>
-            </select>
+    <h1>Pedido de Blocos</h1>
 
+    <label for="tipoPedido">Tipo de Pedido:</label>
+    <select id="tipoPedido" onchange="renderBlocos()">
+        <option value="simples">Simples (1 bloco)</option>
+        <option value="duplo">Duplo (2 blocos)</option>
+        <option value="triplo">Triplo (3 blocos)</option>
+    </select>
+
+    <div id="divCentralizada">
+        <div id="blocosContainer"></div>
+
+        <div class="containerLoja" id="containerLoja">
             <div id="blocosContainer"></div>
-
-            <div class="containerLoja" id="containerLoja">
-                <div id="blocosContainer"></div>
-        
-                <div class="bloco">
-        
-                    <h2 class="big-subtitle">Bloco Montado</h2>
-                    <div class="pedido-view spin" id="pedido-viewBlocoMontado">
-        
-                        <div class="relative1">
-        
-                            <div id="divAlturaTampa" class="absolute0">
+    
+            <div class="bloco">
+    
+                <h2 class="big-subtitle">Bloco Montado</h2>
+                <div class="pedido-view spin" id="pedido-viewBlocoMontado">
+    
+                    <div class="relative1">
+    
+                        <div id="divAlturaTampa" class="absolute0">
                             <img class="imagemBlocoMontado" id="tampa" src="assets/bloco/rTampa1.png" alt="tampa">
-                            </div>
-        
-                            <div id="divAlturaAndar1" class="absolute0">
-                                <img class="imagemBlocoMontado" id="andar1Pedido" src="assets/bloco/rBlocoCor1.png"
-                                    alt="bloco">
-                            </div>
-        
-                            <div id="divAlturaAndar2" class="absolute0">
-                                <img class="imagemBlocoMontado" id="andar2Pedido" src="assets/bloco/rBlocoCor2.png"
-                                    alt="bloco">
-                            </div>
-        
-                            <div id="divAlturaAndar3" class="absolute0">
-                                <img class="imagemBlocoMontado" id="andar3Pedido" src="assets/bloco/rBlocoCor3.png"
-                                    alt="bloco">
-                            </div>
-        
-                            <div id="divAlturaLaminaAndar1Pos1" class="absolute0">
-                                <img class="imagemBlocoMontado" id="pos1andar1Pedido" src="assets/laminas/lamina1-0.png"
-                                    alt="Lamina1">
-                            </div>
-        
-                            <div id="divAlturaLaminaAndar2Pos1" class="absolute0">
-                                <img class="imagemBlocoMontado" id="pos1andar2Pedido" src="assets/laminas/lamina1-0.png"
-                                    alt="Lamina1">
-                            </div>
-        
-                            <div id="divAlturaLaminaAndar3Pos1" class="absolute0">
-                                <img class="imagemBlocoMontado" id="pos1andar3Pedido" src="assets/laminas/lamina1-0.png"
-                                    alt="Lamina1">
-                            </div>
-        
-                            <div id="divAlturaPadraoAndar3Pos1" class="absolute0">
-                                <img class="imagemBlocoMontado2" id="padrao1andar3Pedido"
-                                    src="assets/padroes/rpadrao0-1.png" alt="Padrao1">
-                            </div>
-        
-                            <div id="divAlturaPadraoAndar3Pos2" class="absolute0">
-                                <img class="imagemBlocoMontado2" id="padrao2andar3Pedido"
-                                    src="assets/padroes/rpadrao0-2.png" alt="Padrao2">
-                            </div>
-        
-                            <div id="divAlturaPadraoAndar3Pos3" class="absolute0">
-                                <img class="imagemBlocoMontado2" id="padrao3andar3Pedido"
-                                    src="assets/padroes/rpadrao0-1.png" alt="Padrao3">
-                            </div>
-        
-                            <div id="divAlturaLaminaAndar1Pos2" class="absolute0">
-                                <img class="imagemBlocoMontado" id="pos2andar1Pedido" src="assets/laminas/lamina1-0.png"
-                                    alt="Lamina2">
-                            </div>
-        
-                            <div id="divAlturaLaminaAndar2Pos2" class="absolute0">
-                                <img class="imagemBlocoMontado" id="pos2andar2Pedido" src="assets/laminas/lamina1-0.png"
-                                    alt="Lamina2">
-                            </div>
-        
-                            <div id="divAlturaLaminaAndar3Pos2" class="absolute0">
-                                <img class="imagemBlocoMontado" id="pos2andar3Pedido" src="assets/laminas/lamina1-0.png"
-                                    alt="Lamina2">
-                            </div>
-        
-                            <div id="divAlturaPadraoAndar2Pos1" class="absolute0">
-                                <img class="imagemBlocoMontado2" id="padrao1andar2Pedido"
-                                    src="assets/padroes/rpadrao0-1.png" alt="Padrao1">
-                            </div>
-        
-                            <div id="divAlturaPadraoAndar2Pos2" class="absolute0">
-                                <img class="imagemBlocoMontado2" id="padrao2andar2Pedido"
-                                    src="assets/padroes/rpadrao0-2.png" alt="Padrao2">
-                            </div>
-        
-                            <div id="divAlturaPadraoAndar2Pos3" class="absolute0">
-                                <img class="imagemBlocoMontado2" id="padrao3andar2Pedido"
-                                    src="assets/padroes/rpadrao0-1.png" alt="Padrao3">
-                            </div>
-        
-                            <div id="divAlturaLaminaAndar1Pos3" class="absolute0">
-                                <img class="imagemBlocoMontado" id="pos3andar1Pedido" src="assets/laminas/lamina1-0.png"
-                                    alt="Lamina3">
-                            </div>
-        
-                            <div id="divAlturaLaminaAndar2Pos3" class="absolute0">
-                                <img class="imagemBlocoMontado" id="pos3andar2Pedido" src="assets/laminas/lamina1-0.png"
-                                    alt="Lamina3">
-                            </div>
-        
-                            <div id="divAlturaLaminaAndar3Pos3" class="absolute0">
-                                <img class="imagemBlocoMontado" id="pos3andar3Pedido" src="assets/laminas/lamina1-0.png"
-                                    alt="Lamina3">
-                            </div>
-        
-                            <div id="divAlturaPadraoAndar1Pos1" class="absolute0">
-                                <img class="imagemBlocoMontado2" id="padrao1andar1Pedido"
-                                    src="assets/padroes/rpadrao0-1.png" alt="Padrao1">
-                            </div>
-        
-                            <div id="divAlturaPadraoAndar1Pos2" class="absolute0">
-                                <img class="imagemBlocoMontado2" id="padrao2andar1Pedido"
-                                    src="assets/padroes/rpadrao0-2.png" alt="Padrao2">
-                            </div>
-        
-                            <div id="divAlturaPadraoAndar1Pos3" class="absolute0">
-                                <img class="imagemBlocoMontado2" id="padrao3andar1Pedido"
-                                    src="assets/padroes/rpadrao0-1.png" alt="Padrao3">
-                            </div>
-        
                         </div>
-        
+    
+                        <div id="divAlturaAndar1" class="absolute0">
+                            <img class="imagemBlocoMontado" id="andar1Pedido" src="assets/bloco/rBlocoCor1.png" alt="bloco">
+                        </div>
+    
+                        <div id="divAlturaAndar2" class="absolute0">
+                            <img class="imagemBlocoMontado" id="andar2Pedido" src="assets/bloco/rBlocoCor2.png" alt="bloco">
+                        </div>
+    
+                        <div id="divAlturaAndar3" class="absolute0">
+                            <img class="imagemBlocoMontado" id="andar3Pedido" src="assets/bloco/rBlocoCor3.png" alt="bloco">
+                        </div>
+    
+                        <div id="divAlturaLaminaAndar1Pos1" class="absolute0">
+                            <img class="imagemBlocoMontado" id="pos1andar1Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina1">
+                        </div>
+    
+                        <div id="divAlturaLaminaAndar2Pos1" class="absolute0">
+                            <img class="imagemBlocoMontado" id="pos1andar2Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina1">
+                        </div>
+    
+                        <div id="divAlturaLaminaAndar3Pos1" class="absolute0">
+                            <img class="imagemBlocoMontado" id="pos1andar3Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina1">
+                        </div>
+    
+                        <div id="divAlturaPadraoAndar3Pos1" class="absolute0">
+                            <img class="imagemBlocoMontado2" id="padrao1andar3Pedido" src="assets/padroes/rpadrao0-1.png"
+                                alt="Padrao1">
+                        </div>
+    
+                        <div id="divAlturaPadraoAndar3Pos2" class="absolute0">
+                            <img class="imagemBlocoMontado2" id="padrao2andar3Pedido" src="assets/padroes/rpadrao0-2.png"
+                                alt="Padrao2">
+                        </div>
+    
+                        <div id="divAlturaPadraoAndar3Pos3" class="absolute0">
+                            <img class="imagemBlocoMontado2" id="padrao3andar3Pedido" src="assets/padroes/rpadrao0-1.png"
+                                alt="Padrao3">
+                        </div>
+    
+                        <div id="divAlturaLaminaAndar1Pos2" class="absolute0">
+                            <img class="imagemBlocoMontado" id="pos2andar1Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina2">
+                        </div>
+    
+                        <div id="divAlturaLaminaAndar2Pos2" class="absolute0">
+                            <img class="imagemBlocoMontado" id="pos2andar2Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina2">
+                        </div>
+    
+                        <div id="divAlturaLaminaAndar3Pos2" class="absolute0">
+                            <img class="imagemBlocoMontado" id="pos2andar3Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina2">
+                        </div>
+    
+                        <div id="divAlturaPadraoAndar2Pos1" class="absolute0">
+                            <img class="imagemBlocoMontado2" id="padrao1andar2Pedido" src="assets/padroes/rpadrao0-1.png"
+                                alt="Padrao1">
+                        </div>
+    
+                        <div id="divAlturaPadraoAndar2Pos2" class="absolute0">
+                            <img class="imagemBlocoMontado2" id="padrao2andar2Pedido" src="assets/padroes/rpadrao0-2.png"
+                                alt="Padrao2">
+                        </div>
+    
+                        <div id="divAlturaPadraoAndar2Pos3" class="absolute0">
+                            <img class="imagemBlocoMontado2" id="padrao3andar2Pedido" src="assets/padroes/rpadrao0-1.png"
+                                alt="Padrao3">
+                        </div>
+    
+                        <div id="divAlturaLaminaAndar1Pos3" class="absolute0">
+                            <img class="imagemBlocoMontado" id="pos3andar1Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina3">
+                        </div>
+    
+                        <div id="divAlturaLaminaAndar2Pos3" class="absolute0">
+                            <img class="imagemBlocoMontado" id="pos3andar2Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina3">
+                        </div>
+    
+                        <div id="divAlturaLaminaAndar3Pos3" class="absolute0">
+                            <img class="imagemBlocoMontado" id="pos3andar3Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina3">
+                        </div>
+    
+                        <div id="divAlturaPadraoAndar1Pos1" class="absolute0">
+                            <img class="imagemBlocoMontado2" id="padrao1andar1Pedido" src="assets/padroes/rpadrao0-1.png"
+                                alt="Padrao1">
+                        </div>
+    
+                        <div id="divAlturaPadraoAndar1Pos2" class="absolute0">
+                            <img class="imagemBlocoMontado2" id="padrao2andar1Pedido" src="assets/padroes/rpadrao0-2.png"
+                                alt="Padrao2">
+                        </div>
+    
+                        <div id="divAlturaPadraoAndar1Pos3" class="absolute0">
+                            <img class="imagemBlocoMontado2" id="padrao3andar1Pedido" src="assets/padroes/rpadrao0-1.png"
+                                alt="Padrao3">
+    
+    
+                        </div>
                     </div>
                 </div>
+    
+                <div class="button-group">
+                    <button onclick="enviarPedido()">Enviar Pedido</button>
+                    <button type="button" onclick="window.location.href='/listar_pedidos'">Listar Pedidos</button>
+                </div>
             </div>
-
-            <div class="button-group">
-                <button onclick="enviarPedido()">Enviar Pedido</button>
-                <button type="button" onclick="window.location.href='/listar_pedidos'">Listar Pedidos</button>
-            </div>
+        </div>
     </div>
-          <!-- BOTÃO VOLTAR - FLUTUANTE ACIMA DO ESTOQUE -->
-    <button class="btn-voltar-flutuante" onclick="window.location.href='/'">
-        <span class="material-symbols-rounded">arrow_back</span> Voltar
-    </button>
+    
+        <!-- BOTÃO VOLTAR - FLUTUANTE ACIMA DO ESTOQUE -->
+        <button class="btn-voltar-flutuante" onclick="window.location.href='/'">
+            <span class="material-symbols-rounded">arrow_back</span> Voltar
+        </button>
 
-    <!-- BOTÃO CORRIGIR ESTOQUE -->
-    <button class="estoque-btn" type="button" onclick="window.location.href='/editar_clp1'">
-        <span class="material-symbols-rounded">inventory</span> Corrigir Estoque
-    </button>
+        <!-- BOTÃO CORRIGIR ESTOQUE -->
+        <button class="estoque-btn" type="button" onclick="window.location.href='/editar_clp1'">
+            <span class="material-symbols-rounded">inventory</span> Corrigir Estoque
+        </button>
 
 
-    <script src="/js/pedido.js"></script>
-    <script src="/js/statusConexao.js"></script>
+        <script src="/js/pedido.js"></script>
+        <script src="/js/statusConexao.js"></script>
 
 </body>
+
 </html>

@@ -105,25 +105,6 @@ body {
     min-height: 100vh;
 }
 
-.main-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-}
-
-.container {
-    max-width: 1080px;
-    width: 100%;
-    padding: 30px;
-    margin-top: 20px;
-    background: linear-gradient(135deg, #1a4b8c73, #0d3a70);
-    /* Azul mais claro e vibrante */
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--azul-primario);
-}
-
 h1,
 h2,
 h3 {
@@ -132,7 +113,9 @@ h3 {
     border-bottom: 2px solid var(--azul-primario);
     padding-bottom: 8px;
     font-weight: 600;
+    position: center;
 }
+
 
 label {
     display: block;
@@ -142,16 +125,16 @@ label {
 }
 
 select {
-    padding: 12px 16px;
+    padding: 8px 16px;
     border: 2px solid var(--azul-primario);
     border-radius: 6px;
     background-color: var(--azul-medio);
     color: var(--branco);
     font-size: 15px;
     width: 100%;
-    max-width: 340px;
+    max-width: 197px;
     transition: all 0.3s ease;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 select:focus {
@@ -164,9 +147,9 @@ select:focus {
 #blocosContainer {
     display: flex;
     gap: 24px;
-    margin: 30px 0;
+    margin: -60px 0;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .bloco,
@@ -323,7 +306,8 @@ hr {
 .containerLoja {
     margin-top: 10px;
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;  /* Permite quebrar para a linha de baixo se faltar espaço */
+    gap: 20px;         /* Espaçamento entre os elementos */
 }
 
 .containerLoja #blocosContainer {
@@ -507,6 +491,7 @@ hr {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     color: var(--branco);
+    margin-top: -70px;  /* Sobe mais ainda o container */
 }
 
 .containerLoja .bloco:hover {
@@ -638,9 +623,9 @@ hr {
 .containerLoja #blocosContainer {
     display: flex;
     gap: 20px;
+    margin-top: -120px;  /* Sobe mais ainda o container */
     flex-wrap: wrap;
     justify-content: center;
-    /* Centraliza os blocos horizontalmente */
 }
 
 .containerLoja.centered #blocosContainer {
@@ -731,4 +716,14 @@ header {
     align-items: center;
     gap: 0.5rem;
     /* 14px */
+}
+
+#divCentralizada {
+    display: flex;
+    justify-content: center;  /* Centraliza horizontalmente */
+    align-items: flex-start;   /* Alinha no topo (ou use center para centralizar verticalmente também) */
+    gap: 20px;                 /* Espaçamento entre os elementos internos */
+    flex-wrap: wrap;           /* Se quiser que quebre para a linha de baixo caso faltar espaço */
+    margin-top: 20px;
+    width: 100%;
 }
