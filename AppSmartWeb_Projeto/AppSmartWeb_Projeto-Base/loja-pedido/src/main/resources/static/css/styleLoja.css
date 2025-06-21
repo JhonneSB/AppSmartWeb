@@ -105,20 +105,76 @@ body {
     min-height: 100vh;
 }
 
-h1,
-h2,
+/* H1 - Título Principal */
+h1 {
+    color: var(--branco);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    font-weight: 700;
+    text-align: center;
+    position: relative;
+    letter-spacing: 0.5px;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    
+}
+
+/* H2 - Subtítulo */
+h2 {
+    color: var(--branco);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.5px;
+    font-size: 2em;
+    
+}
+
+/* H3 - Subseção */
 h3 {
     color: var(--branco);
-    margin-bottom: 16px;
-    border-bottom: 2px solid var(--azul-primario);
-    padding-bottom: 8px;
-    font-weight: 600;
-    position: center;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    font-weight: 700;
+    position: relative;
+    letter-spacing: 0.5px;
+    font-size: 1.5em;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-top: 30px;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+/* Efeito de sublinhado decorativo */
+
+
+/* Efeito hover sutil */
+h1:hover {
+    color: var(--azul-claro);
+    transition: color 0.3s ease;
+}
+
+/* Sombreamento sutil no texto */
+h1 {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 
 label {
     display: block;
+    margin-top: -8px; /* "Puxa" o label para cima */
     margin-bottom: 8px;
     font-weight: 500;
     color: var(--branco);

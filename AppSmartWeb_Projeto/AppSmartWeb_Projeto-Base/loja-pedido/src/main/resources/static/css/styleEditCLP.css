@@ -19,6 +19,14 @@ html, body {
     display: flex;
     flex-direction: column;
 }
+h1 {
+    color: var(--branco);
+    margin-bottom: 16px;
+    border-bottom: 2px solid var(--azul-primario);
+    padding-bottom: 8px;
+    font-weight: 600;
+    text-align: center; /* Esta é a propriedade correta para centralizar texto */
+}
 
 /* Container centralizado */
 .container1 {
@@ -35,6 +43,7 @@ html, body {
 
 /* Grade de estoque */
 .grid1 {
+    margin-top: -95px; /* ajuste este valor conforme necessário */
     display: grid;
     grid-template-columns: repeat(6, minmax(40px, 1fr));
     grid-template-rows: repeat(5, minmax(40px, 1fr));
