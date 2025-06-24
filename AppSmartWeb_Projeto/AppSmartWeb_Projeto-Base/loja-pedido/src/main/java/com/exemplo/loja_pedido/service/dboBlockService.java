@@ -6,27 +6,27 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.exemplo.loja_pedido.model.dboBlock;
-import com.exemplo.loja_pedido.repository.dboBlockRepository;
+import com.exemplo.loja_pedido.model.DboBlock;
+import com.exemplo.loja_pedido.repository.DboBlockRepository;
 
 @Service
 public class dboBlockService
 {
     @Autowired
-    private dboBlockRepository blockRepository;
+    private DboBlockRepository blockRepository;
 
-    public dboBlock cadastrarBloco(dboBlock block)
+    public DboBlock cadastrarBloco(DboBlock block)
     {
         return blockRepository.save(block);
     }
 
-    public void atualizarBlocos(List<dboBlock> blockList)
+    public void atualizarBlocos(List<DboBlock> blockList)
     {
-        for (dboBlock incomingBlock : blockList)
+        for (DboBlock incomingBlock : blockList)
         {
             if (incomingBlock.getId() != null && blockRepository.existsById(incomingBlock.getId()))
             {
-                dboBlock existingBlock = blockRepository.findById(incomingBlock.getId()).get();
+                DboBlock existingBlock = blockRepository.findById(incomingBlock.getId()).get();
                 existingBlock.setColor(incomingBlock.getColor());
                 existingBlock.setStorageId(incomingBlock.getStorageId());
                 existingBlock.setProductionOrder(incomingBlock.getProductionOrder());
@@ -40,14 +40,14 @@ public class dboBlockService
     }
     
 
-    public List<dboBlock> listarBlocos()
+    public List<DboBlock> listarBlocos()
     {
         return blockRepository.findAll();
     }
 
-    public dboBlock buscarPorId(Long id)
+    public DboBlock buscarPorId(Long id)
     {
-        Optional<dboBlock> bloco = blockRepository.findById(id);
+        Optional<DboBlock> bloco = blockRepository.findById(id);
         return bloco.orElseThrow(() -> new RuntimeException("Bloco não encontrado!"));
     }
 

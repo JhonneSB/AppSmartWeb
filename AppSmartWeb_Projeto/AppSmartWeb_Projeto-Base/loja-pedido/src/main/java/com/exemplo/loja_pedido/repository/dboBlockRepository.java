@@ -2,9 +2,9 @@ package com.exemplo.loja_pedido.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.exemplo.loja_pedido.model.dboBlock;
+import com.exemplo.loja_pedido.model.DboBlock;
 
-public interface dboBlockRepository extends JpaRepository<dboBlock, Long>
+public interface DboBlockRepository extends JpaRepository<DboBlock, Long>
 {
 
 }

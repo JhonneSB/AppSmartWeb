@@ -152,7 +152,7 @@ function verBlocosMontados() {
     document.getElementById("tampa").src = andares ? "assets/bloco/rTampa1.png" : "assets/bloco/rBlocoCor0.png";
 
     function aplicarFiltroPadrao(padraoElement, corLamina) {
-        if (corLamina === "3" || corLamina === "preto") {
+        if (corLamina === "5" || corLamina === "preto") {
             // Força o padrão a ser branco (usando brightness(0) invert(1))
             padraoElement.style.filter = "brightness(0) invert(1)";
             // Opcional: aumenta o contraste para garantir que fique branco puro
@@ -272,7 +272,7 @@ function changePedidoView(id, lamina) {
 
     // Função auxiliar para aplicar filtro invert no PADRÃO se a lâmina for preta (cor "5")
     function aplicarFiltroPadrao(padraoElement, corLamina) {
-        if (corLamina === "3") { // Assumindo que "5" é o valor para preto
+        if (corLamina === "5") { // Assumindo que "5" é o valor para preto
             padraoElement.style.filter = "invert(100%)";
         } else {
             padraoElement.style.filter = "none";

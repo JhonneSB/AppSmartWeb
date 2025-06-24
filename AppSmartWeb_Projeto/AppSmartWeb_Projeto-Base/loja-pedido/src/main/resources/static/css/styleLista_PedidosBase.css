@@ -2,7 +2,7 @@
     --azul-primario: #1565c0;
     --azul-secundario: #0d47a1;
     --azul-escuro: #002b45;
-    --azul-medio: #003e60;
+    --azul-medio: #0337579a;
     --azul-claro: #dceffb;
     --branco: #ffffff;
     --cinza: #757575;
@@ -96,7 +96,7 @@ header h1 {
 /* CORPO PRINCIPAL */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, var(--azul-escuro), var(--azul-primario));
+    background: linear-gradient(to right, #002654, #004080);
     color: var(--branco);
     margin: 0;
     padding: 0;
@@ -109,23 +109,19 @@ body {
     flex: 1;
     display: flex;
     justify-content: center;
-    padding: 12px; /* Reduzido de 20px para 12px (40%) */
-    transform: scale(0.8); /* Redução adicional para chegar aos 40% */
-    transform-origin: top center;
-    width: 125%; /* Compensação para o scale (100/0.8) */
-    margin-left: -12.5%; /* Centralização após o scale */
+    padding: 20px;
 }
 
 .container {
-    max-width: 350px; /* 650px * 0.6 */
+    max-width: 1080px;
     width: 100%;
-    padding: 12px; /* 20px * 0.6 */
-    margin-top: 7px; /* 12px * 0.6 */
-    background: linear-gradient(135deg, #1a4b8c, #0d3a70);
-    border-radius: 5px; /* 8px * 0.6 */
-    box-shadow: 0 2.4px 7.2px rgba(0, 0, 0, 0.2); /* 4px 12px * 0.6 */
-    border: 0.6px solid var(--azul-primario);
-    font-size: 0.9em; /* Reduz tamanho da fonte proporcionalmente */
+    padding: 30px;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #1a4b8c73, #0d3a70);
+    /* Azul mais claro e vibrante */
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--azul-primario);
 }
 
 h1,
@@ -503,8 +499,6 @@ hr {
 
 .containerLoja .bloco {
     position: relative;
-    height: fit-content;
-    top:20%;
     border: 2px solid var(--azul-primario);
     padding: 20px;
     border-radius: 10px;
@@ -737,88 +731,4 @@ header {
     align-items: center;
     gap: 0.5rem;
     /* 14px */
-}
-
-#containerBlocoMontado{
-    max-width: 355px;
-}
-
-#flexMainContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center; /* Centraliza os containers horizontalmente */
-    gap: 40px; /* Espaço consistente entre os containers */
-    padding: 20px;
-    margin: 0 auto; /* Centraliza o grupo todo na página */
-}
-
-.main-container {
-    flex: 2; /* Cresce para ocupar espaço disponível */
-    max-width: 2000px; /* Largura máxima do main container */
-}
-
-#containerBlocoMontado {
-    width: 355px; /* Largura fixa para o container do bloco montado */
-    height: 380px;
-    flex-shrink: 0; /* Impede que diminua */
-}
-
-#flexMainContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px; /* Reduzido em 40% */
-    padding: 12px; /* Reduzido em 40% */
-    margin: 0 auto;
-}
-
-.main-container {
-    flex: 2;
-    max-width: 1200px; /* Reduzido em 40% */
-    font-size: 0.9em; /* Reduz tamanho de fonte */
-}
-
-.main-container .container {
-    padding: 18px; /* Reduzido em 40% */
-    margin-top: 12px; /* Reduzido em 40% */
-}
-
-#containerBlocoMontado {
-    width: 213px; /* 355px * 0.6 */
-    height: 228px; /* 380px * 0.6 */
-    flex-shrink: 0;
-    align-self: center;
-    margin-top: 60px;
-}
-
-/* Reduz tamanhos de todos os elementos em 40% */
-.main-container h1,
-.main-container h2,
-.main-container h3 {
-    font-size: 1.2em; /* Ajustado */
-    margin-bottom: 9.6px; /* 16px * 0.6 */
-}
-
-.main-container select,
-.main-container button {
-    padding: 7.2px 14.4px; /* 12px 24px * 0.6 */
-    font-size: 0.96em; /* 16px * 0.6 */
-    margin-top: 9.6px; /* 16px * 0.6 */
-}
-
-/* Ajuste para os botões flutuantes */
-.btn-voltar-flutuante,
-.estoque-btn {
-    font-size: 0.96em;
-    padding: 7.2px 14.4px;
-}
-
-.btn-voltar-flutuante {
-    bottom: 85px;
-    right: 20px;
-}
-
-.estoque-btn {
-    bottom: 20px;
-    right: 20px;
 }

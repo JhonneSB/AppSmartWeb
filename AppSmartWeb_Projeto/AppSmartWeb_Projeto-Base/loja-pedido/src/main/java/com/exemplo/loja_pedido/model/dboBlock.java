@@ -9,8 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "dbo.Block")
-public class dboBlock
+@Table(name = "dbo_Block")
+public class DboBlock
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
