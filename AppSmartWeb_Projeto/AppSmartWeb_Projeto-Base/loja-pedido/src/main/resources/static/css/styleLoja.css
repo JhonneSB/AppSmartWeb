@@ -2,11 +2,12 @@
     --azul-primario: #1565c0;
     --azul-secundario: #0d47a1;
     --azul-escuro: #002b45;
-    --azul-medio: #003e60;
+    --azul-medio: #0337579a;
     --azul-claro: #dceffb;
     --branco: #ffffff;
     --cinza: #757575;
 }
+
 
 /* CABEÇALHO */
 header {
@@ -94,9 +95,10 @@ header h1 {
 }
 
 /* CORPO PRINCIPAL */
+/* CORPO PRINCIPAL */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, var(--azul-escuro), var(--azul-primario));
+    background: linear-gradient(to right, #002654, #004080);
     color: var(--branco);
     margin: 0;
     padding: 0;
@@ -106,6 +108,7 @@ body {
 }
 
 .main-container {
+    height: fit-content;
     flex: 1;
     display: flex;
     justify-content: center;
@@ -117,15 +120,15 @@ body {
 }
 
 .container {
-    max-width: 1300px; /* 650px * 0.6 */
+    max-width: 1080px;
     width: 100%;
-    padding: 12px; /* 20px * 0.6 */
-    margin-top: 7px; /* 12px * 0.6 */
-    background: linear-gradient(135deg, #1a4b8c, #0d3a70);
-    border-radius: 5px; /* 8px * 0.6 */
-    box-shadow: 0 2.4px 7.2px rgba(0, 0, 0, 0.2); /* 4px 12px * 0.6 */
-    border: 0.6px solid var(--azul-primario);
-    font-size: 0.9em; /* Reduz tamanho da fonte proporcionalmente */
+    padding: 30px;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #1a4b8c73, #0d3a70);
+    /* Azul mais claro e vibrante */
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--azul-primario);
 }
 
 h1,
@@ -503,6 +506,7 @@ hr {
 }
 
 .containerLoja .bloco {
+    margin-top: 15vh;
     position: relative;
     height: fit-content;
     top:20%;
@@ -765,6 +769,7 @@ header {
 }
 
 #flexMainContainer {
+    max-height: 10vh;
     display: flex;
     flex-direction: row;
     justify-content: center;

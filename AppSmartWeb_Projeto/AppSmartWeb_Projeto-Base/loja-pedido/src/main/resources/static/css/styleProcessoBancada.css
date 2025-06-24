@@ -186,7 +186,7 @@ td {
     Barras de progresso
 ---------------------------------------- */
 .barras-container {
-    width: 80%;
+    width: 40%;
     margin: 10px auto;
     display: flex;
     flex-direction: column;
@@ -233,11 +233,17 @@ td {
     Containers e layout
 ---------------------------------------- */
 .bancada-container {
+    width: 40%;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    gap: 2px;
-    flex-wrap: nowrap;
+    margin: 10px 0;
+}
+
+.bancada-container img {
+    width: 40%;
+    max-width: 1200px;
+    height: auto;
+    object-fit: contain;
 }
 
 .bancada-item {
@@ -393,8 +399,8 @@ header h1 {
 
 .progress-shopee {
     margin: 40px auto;
-    padding: 30px 25px;
-    max-width: 960px;
+    padding: 10px 15px;
+    max-width: 540px;
     background-color: #001f3f;
     /* azul escuro */
     border-radius: 16px;
@@ -405,14 +411,14 @@ header h1 {
 
 .progress-title {
     text-align: center;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     margin-bottom: 35px;
     color: #00aaff;
     /* azul claro Senai */
 }
 
 .progress-subtitle {
-    margin-top: 50px;
+    margin-top: 20px;
     font-size: 1.2rem;
     color: #66ccff;
     /* azul suave */
@@ -425,7 +431,6 @@ header h1 {
     align-items: flex-start;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 20px;
     padding: 0 15px;
     margin-top: 10px;
 }
@@ -437,7 +442,7 @@ header h1 {
     text-align: center;
     flex: 1;
     position: relative;
-    min-width: 120px;
+    min-width: 60px;
 }
 
 .step::after {
@@ -486,7 +491,7 @@ header h1 {
 }
 
 .step p {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     max-width: 120px;
     line-height: 1.3;
     color: #cfd8dc;
@@ -516,3 +521,53 @@ header {
     align-items: center;
     gap: 0.5rem; /* 14px */
   }
+
+  /* Reduzir tamanho geral do container do progresso */
+.progress-shopee {
+    margin: 20px auto;
+    padding: 8px 12px;
+    max-width: 500px;
+    border-radius: 10px;
+}
+
+/* Reduzir o círculo de etapa */
+.circle {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/* Diminuir o espaço entre as etapas */
+.step::after {
+    top: 16px;
+    height: 3px;
+}
+
+.step p {
+    font-size: 0.7rem;
+    max-width: 100px;
+}
+
+/* Título e subtítulo mais compactos */
+.progress-title,
+.progress-subtitle {
+    font-size: 1rem;
+}
+
+/* Caixa de texto da etapa menor */
+.etapa-texto {
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    margin: 10px auto 0;
+    max-width: 480px;
+    border-radius: 8px;
+}
+
+/* Opcional: reduzir a barra de progresso */
+.barra-preenchida,
+#barraPrincipal,
+#barraSecundaria {
+    height: 24px;
+    line-height: 24px;
+}

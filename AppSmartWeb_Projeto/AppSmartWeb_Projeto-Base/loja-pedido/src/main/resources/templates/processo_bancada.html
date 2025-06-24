@@ -1,70 +1,78 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" >
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Pedidos de Blocos</title>
     <link rel="stylesheet" th:href="@{/css/styleProcessoBancada.css}">
     <link rel="stylesheet" th:href="@{/css/headerIsolado.css}" href="/css/headerIsolado.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Adicionando estilos inline para garantir as alterações */
+        .bancada-container img {
+            width: 90%;
+            max-width: 1200px;
+            height: auto;
+            margin: 10px auto;
+            display: block;
+        }
+        
+        .progress-shopee {
+            width: 95%;
+            max-width: 1200px;
+            margin: 20px auto;
+            box-sizing: border-box;
+        }
+        
+        body {
+            overflow-x: hidden;
+            padding-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
 
- <!-- CABEÇALHO -->
- <header>
-    <div class="left-header">
-        <img src="fotosenai (1).png" alt="Logo Cubo">
-        <h1>Sistema de Gestão da Bancada</h1>
-    </div>
-    <div class="right-header">
-        <img src="senailogo.png" alt="Logo SENAI">
-    </div>
-    <div class="wifi-fixed">
-    <i class="fas fa-signal"></i> <!-- Ícone de barras de sinal -->
-    <span class="wifi-status">Desconectado</span>
-</div>
-</header>
+    <!-- CABEÇALHO -->
+    <header>
+        <div class="left-header">
+            <img src="fotosenai (1).png" alt="Logo Cubo">
+            <h1>Sistema de Gestão da Bancada</h1>
+        </div>
+        <div class="right-header">
+            <img src="senailogo.png" alt="Logo SENAI">
+        </div>
+        <div class="wifi-fixed">
+            <i class="fas fa-signal"></i> <!-- Ícone de barras de sinal -->
+            <span class="wifi-status">Desconectado</span>
+        </div>
+    </header>
 
     <div class="bancada-container">
-        <div class="bancada-item">
-                <img th:src="@{/image/Bancada_parte_1.png}" alt="Estoque">
-        </div>
-        <div class="bancada-item">
-                <img th:src="@{/image/Bancada_parte_2.png}" alt="Processo">
-        </div>
-
-        <div class="bancada-item">
-                <img th:src="@{/image/Bancada_parte_3.png}" alt="Montagem">
-        </div>
-
-        <div class="bancada-item">
-                <img th:src="@{/image/Bancada_parte_4.png}" alt="Expedição">
-        </div>
+        <img th:src="@{/image/bancada.png}" alt="bancada">
     </div>
 
-     <div class="barras-container">
-
+    <div class="barras-container">
         <div class="progress-shopee">
-
             <h3 class="progress-title">Montagem do Bloco</h3>
-        
             <div id="stepper" class="progress-stepper">
                 <!-- Etapas serão inseridas dinamicamente aqui -->
             </div>
-        
             <h4 class="progress-subtitle">Etapas Internas</h4>
             <div id="etapa-texto" class="etapa-texto">Iniciando...</div>
-        
         </div>
-                  <!-- BOTÃO VOLTAR - FLUTUANTE ACIMA DO ESTOQUE -->
-    <button class="btn-voltar-flutuante" onclick="window.location.href='/'">
-        <span class="material-symbols-rounded">arrow_back</span> Voltar
-    </button>
+        
+        <!-- BOTÃO VOLTAR - FLUTUANTE ACIMA DO ESTOQUE -->
+        <button class="btn-voltar-flutuante" onclick="window.location.href='/'">
+            <span class="material-symbols-rounded">arrow_back</span> Voltar
+        </button>
+    </div>
+    
     <script th:src="@{/js/processo_bancada.js}"></script>
     <script src="/js/statusConexao.js"></script>
 
 </body>
 
-</html>
+</html> 
