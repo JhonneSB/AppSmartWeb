@@ -1,3 +1,9 @@
+:root {
+  --branco: #f9f9f9;
+  --azul-primario: #007bff;
+  --azul-secundario: #00c2ff;
+}
+
 /* Geral */
   * {
     margin: 0;
@@ -19,14 +25,40 @@ html, body {
     display: flex;
     flex-direction: column;
 }
-h1 {
-    color: var(--branco);
-    margin-bottom: 16px;
-    border-bottom: 2px solid var(--azul-primario);
-    padding-bottom: 8px;
-    font-weight: 600;
-    text-align: center; /* Esta é a propriedade correta para centralizar texto */
+h5 {
+  color: var(--branco);
+  font-size: 45px;
+  font-weight: bold;
+  text-align: center;
+  margin: 50px 0 20px 0; /* Desce mais um pouco */
+  padding-bottom: 12px;
+  letter-spacing: 0.7px;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+  margin-bottom: 90px;
 }
+
+/* Linha decorativa */
+h5::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(to right, var(--azul-primario), var(--azul-secundario, #00c2ff));
+  margin: 10px auto 0 auto;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Efeito hover bonito */
+h5:hover::after {
+  width: 80px;
+}
+
+
+
 
 /* Container centralizado */
 .container1 {
@@ -38,7 +70,7 @@ h1 {
     gap: 30px;
     padding: 20px;
     max-width: 100%;
-    overflow: hidden;
+    margin-bottom: 140px;
 }
 
 /* Grade de estoque */

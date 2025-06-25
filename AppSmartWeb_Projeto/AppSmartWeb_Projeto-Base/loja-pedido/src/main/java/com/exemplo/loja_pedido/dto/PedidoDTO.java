@@ -3,6 +3,7 @@ package com.exemplo.loja_pedido.dto;
 import java.util.List;
 
 public class PedidoDTO {
+    private String ipClp;
     private String tipo;
     private List<BlocoDTO> blocos;
 
@@ -20,7 +21,11 @@ public class PedidoDTO {
     public void setBlocos(List<BlocoDTO> blocos) {
         this.blocos = blocos;
     }
+    public String getIpClp() {
+        return ipCLP;
+    }
+    public void setIpClp(String ipCLP) {
+        this.ipCLP = ipCLP;
+    }
 
-
-    
 }
