@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.exemplo.loja_pedido.model.DboBlock;
-import com.exemplo.loja_pedido.service.dboBlockService;
+import com.exemplo.loja_pedido.model.Estoque;
+import com.exemplo.loja_pedido.service.estoqueService;
 
 @Controller
 public class dboBlockController {
 
     @Autowired
-    private dboBlockService dboBlockService;
+    private estoqueService dboBlockService;
 
     // View for corrigirEstoque
     @GetMapping("/corrigirEstoque")
@@ -25,8 +25,8 @@ public class dboBlockController {
     }
 
     @PostMapping("/corrigirEstoque")
-    public ResponseEntity<Void> corrigirEstoque(@RequestBody List<DboBlock> blockList) {
-        dboBlockService.atualizarBlocos(blockList);
+    public ResponseEntity<Void> corrigirEstoque(@RequestBody List<Estoque> blockList) {
+        dboBlockService.atualizarEstoques(blockList);
         return ResponseEntity.ok().build();
    
    

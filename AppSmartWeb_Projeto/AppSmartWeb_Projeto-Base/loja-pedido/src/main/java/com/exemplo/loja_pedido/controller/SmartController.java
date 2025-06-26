@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.exemplo.loja_pedido.dto.BlocoDTO;
 import com.exemplo.loja_pedido.dto.LaminaDTO;
 import com.exemplo.loja_pedido.dto.PedidoDTO;
-import com.exemplo.loja_pedido.model.DboBlock;
-import com.exemplo.loja_pedido.repository.DboBlockRepository;
+import com.exemplo.loja_pedido.model.Estoque;
+import com.exemplo.loja_pedido.model.Expedicao;
+import com.exemplo.loja_pedido.repository.EstoqueRepository;
+import com.exemplo.loja_pedido.repository.ExpedicaoRepository;
 import com.exemplo.loja_pedido.repository.PedidoRepository;
 import com.exemplo.loja_pedido.service.SmartService;
 
@@ -44,7 +46,10 @@ public class SmartController {
     private SmartService smartService;
 
     @Autowired
-    private DboBlockRepository dboBlockRepository;
+    private EstoqueRepository estoqueRepository;
+
+    @Autowired
+    private ExpedicaoRepository expedicaoRepository;
 
     @Autowired
     private PedidoRepository pedidoRepository;
@@ -99,15 +104,15 @@ public class SmartController {
                     if (pos >= 1 && pos <= 28) {
                         byteBlocosArray[pos - 1] = valor.byteValue();
 
-                        DboBlock estoque = dboBlockRepository.findByPosicaoEstoque(pos)
+                        Estoque estoque = estoqueRepository.findByPosition((short)pos)
                                 .orElseGet(() -> {
                                     Estoque novo = new Estoque();
-                                    novo.setPosicaoEstoque(pos);
+                                    novo.setPosition((short)pos);
                                     return novo;
                                 });
 
                         estoque.setColor(valor.shortValue());
-                        dboBlockRepository.save(estoque);
+                        estoqueRepository.save(estoque);
                     }
                 } catch (Exception e) {
                     System.err.println("Erro ao processar posição: " + posStr + " - " + e.getMessage());
@@ -122,6 +127,44 @@ public class SmartController {
         }
     }
 
+    @PostMapping("/expedicao/salvar")
+    public ResponseEntity<String> salvarExpedicao(@RequestBody Map<String, Integer> dados) {
+        System.out.println("Atualizando tabela Expedição!!");
+
+        try {
+            dados.forEach((posStr, valor) -> {
+                try {
+                    int pos = Integer.parseInt(posStr.split(":")[1]); // ex: "OP:3" → 3
+                    Short posShort = (short) pos;
+                    
+                    if (pos >= 1 && pos <= 12) {
+                        if (valor == 0) {
+                            expedicaoRepository.findByPosicaoExpedicao(posShort).ifPresent(expedicaoRepository::delete);
+                            System.out.println("Removida posição " + pos + " da tabela Expedição.");
+                        } else {
+                            Expedicao exp = expedicaoRepository
+                                    .findByPosicaoExpedicao(posShort)
+                                    .orElseGet(Expedicao::new);
+                    
+                            exp.setPosicaoExpedicao(posShort);
+                            exp.setOrderNumber(valor);
+                            expedicaoRepository.save(exp);
+                            System.out.println("Atualizada posição " + pos + " com valor " + valor);
+                        }
+                    }
+                } catch (Exception e) {
+                    System.err.println("Erro ao processar posição: " + posStr + " - " + e.getMessage());
+                }
+            });
+
+            return ResponseEntity.ok("Tabela Expedição atualizada com sucesso.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao atualizar tabela Expedição: " + e.getMessage());
+        }
+    }
+
     @PostMapping("/clp/enviar-estoque")
     public ResponseEntity<String> enviarParaClp(@RequestBody Map<String, String> payload) {
         try {
@@ -132,11 +175,11 @@ public class SmartController {
             }
 
             // Buscar todos os registros do estoque
-            List<DboBlock> listaEstoque = dboBlockRepository.findAll();
+            List<Estoque> listaEstoque = estoqueRepository.findAll();
             byte[] byteBlocosArray = new byte[28];
 
-            for (DboBlock e : listaEstoque) {
-                int pos = e.getStorageId(); // posição de 1 a 28
+            for (Estoque e : listaEstoque) {
+                int pos = e.getPosition(); // posição de 1 a 28
                 if (pos >= 1 && pos <= 28) {
                     byteBlocosArray[pos - 1] = (byte) e.getColor().shortValue();
                 }
@@ -170,14 +213,14 @@ public class SmartController {
             }
 
             // Buscar todos os registros da expedição
-            List<DboBlock> listaExpedicao = dboBlockRepository.findAll();
+            List<Expedicao> listaExpedicao = expedicaoRepository.findAll();
 
             // Cada posição da expedição usa 2 bytes (short)
             byte[] byteBlocosArray = new byte[24];
 
-            for (DboBlock e : listaExpedicao) {
-                int pos = e.getPosition(); // posição de 1 a 12
-                int valor = e.getProductionOrder();    // valor do pedido
+            for (Expedicao e : listaExpedicao) {
+                int pos = e.getPosicaoExpedicao(); // posição de 1 a 12
+                int valor = e.getOrderNumber();    // valor do pedido
 
                 if (pos >= 1 && pos <= 12) {
                     int index = (pos - 1) * 2;
@@ -220,14 +263,14 @@ public class SmartController {
                         byteBlocosArray[pos - 1] = valor.byteValue();
 
                         // Persistência no banco de dados
-                        DboBlock estoque = dboBlockRepository.findByPosicaoEstoque(pos)
+                        Estoque estoque = estoqueRepository.findByPosition((short)pos)
                                 .orElseGet(() -> {
                                     Estoque novo = new Estoque();
-                                    novo.setPosicaoEstoque(pos);
+                                    novo.setPosition((short)pos);
                                     return novo;
                                 });
-                        estoque.setColor(valor.shortValue());
-                        dboBlockRepository.save(estoque);
+                                estoque.setColor(valor.shortValue());
+                                estoqueRepository.save(estoque);
                     }
                 } catch (Exception e) {
                     System.err.println("Erro ao processar posição: " + posStr + " - " + e.getMessage());
@@ -248,45 +291,6 @@ public class SmartController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro ao enviar pedido ao CLP: " + e.getMessage());
-        }
-    }
-
-    @PostMapping("/expedicao/salvar")
-    public ResponseEntity<String> salvarExpedicao(@RequestBody Map<String, Integer> dados) {
-        System.out.println("Atualizando tabela Expedição!!");
-
-        try {
-            dados.forEach((posStr, valor) -> {
-                try {
-                    int pos = Integer.parseInt(posStr.split(":")[1]); // ex: "OP:3" → 3
-
-                    if (pos >= 1 && pos <= 12) {
-                        if (valor == 0) {
-                            // Remove do banco se valor == 0
-                            dboBlockRepository.findByPosicaoExpedicao(pos).ifPresent(dboBlockRepository::delete);
-                            System.out.println("Removida posição " + pos + " da tabela Expedição.");
-                        } else {
-                            // Atualiza ou insere normalmente
-                            DboBlock exp = dboBlockRepository
-                                    .findByPosicaoExpedicao(pos)
-                                    .orElseGet(DboBlock::new);
-
-                            exp.setPosicaoExpedicao(pos);
-                            exp.setOrderNumber(valor);
-                            dboBlockRepository.save(exp);
-                            System.out.println("Atualizada posição " + pos + " com valor " + valor);
-                        }
-                    }
-                } catch (Exception e) {
-                    System.err.println("Erro ao processar posição: " + posStr + " - " + e.getMessage());
-                }
-            });
-
-            return ResponseEntity.ok("Tabela Expedição atualizada com sucesso.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao atualizar tabela Expedição: " + e.getMessage());
         }
     }
 
@@ -353,7 +357,7 @@ public class SmartController {
                 continue;
             }
 
-            int corBloco = bloco.getCorBloco();
+            int corBloco = Integer.parseInt(bloco.getCor());
 
             // Buscar posição disponível para essa cor, que ainda não foi usada
             int posicaoEstoque = smartService.buscarPrimeiraPosicaoPorCor(corBloco, posicoesUsadas);
@@ -368,8 +372,8 @@ public class SmartController {
 
             List<LaminaDTO> laminas = bloco.getLaminas();
             for (int i = 0; i < Math.min(3, laminas.size()); i++) {
-                dados[indexBase + 2 + i] = laminas.get(i).getCor();
-                dados[indexBase + 5 + i] = laminas.get(i).getPadrao();
+                dados[indexBase + 2 + i] = Integer.parseInt(laminas.get(i).getCor());
+                dados[indexBase + 5 + i] = Integer.parseInt(laminas.get(i).getCor());
             }
 
             dados[indexBase + 8] = 0; // processamento_Andar_X

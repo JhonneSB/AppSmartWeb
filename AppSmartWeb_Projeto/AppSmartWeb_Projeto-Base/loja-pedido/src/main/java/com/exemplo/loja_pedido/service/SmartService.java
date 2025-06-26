@@ -18,8 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.exemplo.loja_pedido.model.DboBlock;
-import com.exemplo.loja_pedido.repository.DboBlockRepository;
+import com.exemplo.loja_pedido.model.Estoque;
+import com.exemplo.loja_pedido.repository.EstoqueRepository;
+import com.exemplo.loja_pedido.repository.ExpedicaoRepository;
+
 @Service
 public class SmartService {
 
@@ -42,7 +44,10 @@ public class SmartService {
     public static boolean blockFinished = false;
 
     @Autowired
-    private DboBlockRepository dboBlockRepository;
+    private EstoqueRepository estoqueRepository;
+
+    @Autowired
+    private ExpedicaoRepository expedicaoRepository;
 
     // Variáveis de cada estação
     //********************** Estoque ***************************
@@ -1160,20 +1165,20 @@ public class SmartService {
 
     //********************************************************************************************************************************************** */
     public int buscarPrimeiraPosicaoPorCor(int cor, Set<Integer> posicoesUsadas) {
-        List<DboBlock> estoque = dboBlockRepository.findByColorOrderByPositionAsc((short) cor);
-    
-        for (DboBlock e : estoque) {
-            if (!posicoesUsadas.contains(e.getPosition().intValue())) {
+        List<Estoque> estoque = estoqueRepository.findByColorOrderByPositionAsc((short) cor);
+
+        for (Estoque e : estoque) {
+            if (!posicoesUsadas.contains(e.getPosition())) {
                 return e.getPosition();
             }
         }
-    
+
         return -1; // Nenhuma posição disponível
     }
 
     public int buscarPrimeiraPosicaoLivreExp() {
-        List<Integer> ocupadas = dboBlockRepository.findAllPosicoesOcupadas();
-    
+        List<Integer> ocupadas = expedicaoRepository.findAllPosicoesOcupadas();
+
         for (int i = 1; i <= 12; i++) {
             if (!ocupadas.contains(i)) {
                 return i;
@@ -1182,10 +1187,13 @@ public class SmartService {
         return -1;
     }
 
-
+    public boolean isReadOnly() {
+        return readOnly;
+    }
 
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
         System.out.println("readOnly: " + readOnly);
     }
+
 }

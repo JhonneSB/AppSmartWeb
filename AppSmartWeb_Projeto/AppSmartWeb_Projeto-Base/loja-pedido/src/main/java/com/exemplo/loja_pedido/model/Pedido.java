@@ -23,11 +23,21 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Bloco> blocos;
+
+    private Integer orderProduction;  // <- campo para ordem de produção
     
     // Getters e Setters
     
     public Long getId() {
         return id;
+    }
+
+    public Integer getOrderProduction() {
+        return orderProduction;
+    }
+
+    public void setOrderProduction(Integer orderProduction) {
+        this.orderProduction = orderProduction;
     }
 
     public void setId(Long id) {

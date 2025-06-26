@@ -22,10 +22,10 @@ public class PedidoDTO {
         this.blocos = blocos;
     }
     public String getIpClp() {
-        return ipCLP;
+        return ipClp;
     }
     public void setIpClp(String ipCLP) {
-        this.ipCLP = ipCLP;
+        this.ipClp = ipCLP;
     }
 
 }
