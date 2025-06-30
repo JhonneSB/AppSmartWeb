@@ -110,8 +110,8 @@ h5:hover::after {
 }
 
 .color-2 {
-    background-color: #ef5350;
-    border: 2px solid #e53935;
+    background-color: #ff0400;
+    border: 2px solid #ff0400;
 }
 
 .color-3 {
@@ -144,7 +144,7 @@ button:hover {
 
 /* Reset e configurações globais */
 html {
-    font-size: 25px; /* Aumenta mais a base para parecer com 175-200% de zoom */
+    font-size: 15px; /* Aumenta mais a base para parecer com 175-200% de zoom */
   }
   
   * {

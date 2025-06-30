@@ -1,12 +1,96 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Corrigir Estoque</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/styleEditCLP.css}">
     <link rel="stylesheet" th:href="@{/css/headerIsolado.css}" href="/css/headerIsolado.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        .menu-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s;
+
+            display: flex;
+            /* Centraliza */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-button:hover {
+            background-color: #555;
+        }
+
+        .floating-menu {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            background-color: #1e88e5d4;
+            border-radius: 8px;
+            padding: 6px 0;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+            animation: fadeIn 0.2s ease-in-out;
+            width: 180px;
+            /* 🔹 define largura menor */
+        }
+
+
+        .floating-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 14px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+            border: none;
+            outline: none;
+            background: transparent;
+        }
+
+
+        .floating-menu a:hover,
+        .floating-menu a.active {
+            background-color: #1e88e5;
+            /* azul bonito */
+            border: none;
+            outline: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
 </head>
+
 <body>
 
     <!-- CABEÇALHO -->
@@ -19,9 +103,9 @@
             <img src="senailogo.png" alt="Logo SENAI">
         </div>
         <div class="wifi-fixed">
-    <i class="fas fa-signal"></i> <!-- Ícone de barras de sinal -->
-    <span class="wifi-status">Desconectado</span>
-</div>
+            <i class="fas fa-signal"></i> <!-- Ícone de barras de sinal -->
+            <span class="wifi-status">Desconectado</span>
+        </div>
     </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
@@ -35,12 +119,23 @@
             <button id="atualizar" type="button">
                 <i class="fas fa-sync-alt"></i> Atualizar
             </button>
+
+            <!-- MENU FLUTUANTE -->
+            <div class="floating-menu" id="menuFlutuante">
+                <a href="/pedidos"><i class="fas fa-list"></i> Pedidos</a>
+                <a href="/listar_pedidos"><i class="fas fa-clipboard-list"></i> Listar Pedidos</a>
+                <a href="/processo_bancada"><i class="fas fa-cogs"></i> Processo</a>
+                <a href="/"><i class="fas fa-home"></i> Página Inicial</a>
+            </div>
+
+            <!-- BOTÃO DE MENU -->
+            <button class="menu-button" onclick="toggleMenu()">☰</button>
         </div>
     </div>
 
     <!-- SCRIPT JS -->
     <script>
-        
+
         const grid = document.getElementById('clp1-grid');
         const byteArray = new Array(28).fill(0);
 
@@ -92,22 +187,46 @@
                 },
                 body: JSON.stringify(blockArray)
             })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = "/";
-                } else {
-                    alert("Erro ao atualizar o estoque.");
-                    console.error("Erro no servidor:", response.status);
-                }
-            })
-            .catch(error => {
-                console.error("Erro de rede:", error);
-                alert("Erro de rede ao tentar atualizar o estoque.");
-            });
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "/";
+                    } else {
+                        alert("Erro ao atualizar o estoque.");
+                        console.error("Erro no servidor:", response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error("Erro de rede:", error);
+                    alert("Erro de rede ao tentar atualizar o estoque.");
+                });
         });
         window.onload
     </script>
 
-<script src="/js/statusConexao.js"></script>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menuFlutuante");
+            menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+
+            // Adiciona/remover classe "active" nos links ao abrir
+            const links = menu.querySelectorAll("a");
+            links.forEach(link => {
+                link.classList.toggle("active", menu.style.display === "flex");
+            });
+        }
+
+        // Confirmação de pedido
+        document.querySelectorAll('.btn-confirmar').forEach(button => {
+            button.addEventListener('click', function () {
+                const pedidoId = this.getAttribute('data-id');
+                if (confirm(`Deseja confirmar o pedido #${pedidoId}?`)) {
+                    window.location.href = `/processo_bancada?id=${pedidoId}`;
+                }
+            });
+        });
+    </script>
+
+    <script src="/js/statusConexao.js"></script>
 </body>
+
 </html>

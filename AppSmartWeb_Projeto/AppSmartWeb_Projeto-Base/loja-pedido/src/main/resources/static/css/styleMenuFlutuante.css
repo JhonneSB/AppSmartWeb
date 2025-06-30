@@ -1,0 +1,71 @@
+.menu-button {
+    position: fixed;
+    bottom: 75px;
+    right: 20px;
+ 
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+   
+    transition: background 0.3s;
+    
+    display: flex; /* Centraliza */
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-button:hover {
+    background-color: #555;
+}
+
+.floating-menu {
+    position: fixed;
+    bottom: 140px;
+    right: 20px;
+    background-color: #1e88e5d4;
+    border-radius: 10px;
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    display: none;
+    flex-direction: column;
+    z-index: 999;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.floating-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+    border: none;
+    outline: none;
+    background: transparent; /* 🔹 garante fundo limpo */
+}
+
+.floating-menu a:focus {
+    outline: none;
+    box-shadow: none;
+    background-color: #1e88e5; /* opcional: azul no foco */
+}
+
+
+.floating-menu a:hover,
+.floating-menu a.active {
+    background-color: #1e88e5; /* azul bonito */
+    border: none;
+    outline: none;
+}
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }

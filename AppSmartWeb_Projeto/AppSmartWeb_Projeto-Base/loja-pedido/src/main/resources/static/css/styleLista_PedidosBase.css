@@ -672,7 +672,7 @@ hr {
 .btn-voltar-flutuante {
     position: fixed;
     right: 20px;
-    bottom: 85px;
+    bottom: 20px;
     /* Posicionado acima do botão de estoque */
     display: flex;
     align-items: center;

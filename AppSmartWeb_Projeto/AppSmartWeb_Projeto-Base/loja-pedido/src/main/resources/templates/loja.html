@@ -9,11 +9,12 @@
     <link rel="stylesheet" th:href="@{/css/styleLoja.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/headerIsolado.css}" href="/css/headerIsolado.css">
-</head>
+    <link rel="stylesheet" th:href="@{/css/styleMenuFlutuante.css}">
+</head> 
 
 <body>
-    <!-- CABEÇALHO -->
-    <header>
+     <!-- CABEÇALHO -->
+     <header>
         <div class="left-header">
             <img src="fotosenai (1).png" alt="Logo Cubo">
             <h1>Sistema de Gestão da Bancada</h1>
@@ -26,6 +27,7 @@
             <span class="wifi-status">Desconectado</span>
         </div>
     </header>
+
 
     <!-- CONTEÚDO PRINCIPAL -->
     <div id="flexMainContainer">
@@ -42,11 +44,8 @@
 
                 <div id="blocosContainer"></div>
 
-
-
                 <div class="button-group">
                     <button onclick="enviarPedido()">Enviar Pedido</button>
-                    <button type="button" onclick="window.location.href='/listar_pedidos'">Listar Pedidos</button>
                 </div>
             </div>
         </div>
@@ -60,38 +59,37 @@
                     <div class="relative1">
 
                         <div id="divAlturaTampa" class="absolute0">
-                            <img class="imagemBlocoMontado" id="tampa" src="assets/bloco/rTampa1.png"
-                                alt="tampa">
+                            <img class="imagemBlocoMontado" id="tampa" src="assets/bloco/rTampa1.png" alt="tampa">
                         </div>
 
                         <div id="divAlturaAndar1" class="absolute0">
-                            <img class="imagemBlocoMontado" id="andar1Pedido"
-                                src="assets/bloco/rBlocoCor1.png" alt="bloco">
+                            <img class="imagemBlocoMontado" id="andar1Pedido" src="assets/bloco/rBlocoCor1.png"
+                                alt="bloco">
                         </div>
 
                         <div id="divAlturaAndar2" class="absolute0">
-                            <img class="imagemBlocoMontado" id="andar2Pedido"
-                                src="assets/bloco/rBlocoCor2.png" alt="bloco">
+                            <img class="imagemBlocoMontado" id="andar2Pedido" src="assets/bloco/rBlocoCor2.png"
+                                alt="bloco">
                         </div>
 
                         <div id="divAlturaAndar3" class="absolute0">
-                            <img class="imagemBlocoMontado" id="andar3Pedido"
-                                src="assets/bloco/rBlocoCor3.png" alt="bloco">
+                            <img class="imagemBlocoMontado" id="andar3Pedido" src="assets/bloco/rBlocoCor3.png"
+                                alt="bloco">
                         </div>
 
                         <div id="divAlturaLaminaAndar1Pos1" class="absolute0">
-                            <img class="imagemBlocoMontado" id="pos1andar1Pedido"
-                                src="assets/laminas/lamina1-0.png" alt="Lamina1">
+                            <img class="imagemBlocoMontado" id="pos1andar1Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina1">
                         </div>
 
                         <div id="divAlturaLaminaAndar2Pos1" class="absolute0">
-                            <img class="imagemBlocoMontado" id="pos1andar2Pedido"
-                                src="assets/laminas/lamina1-0.png" alt="Lamina1">
+                            <img class="imagemBlocoMontado" id="pos1andar2Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina1">
                         </div>
 
                         <div id="divAlturaLaminaAndar3Pos1" class="absolute0">
-                            <img class="imagemBlocoMontado" id="pos1andar3Pedido"
-                                src="assets/laminas/lamina1-0.png" alt="Lamina1">
+                            <img class="imagemBlocoMontado" id="pos1andar3Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina1">
                         </div>
 
                         <div id="divAlturaPadraoAndar3Pos1" class="absolute0">
@@ -110,18 +108,18 @@
                         </div>
 
                         <div id="divAlturaLaminaAndar1Pos2" class="absolute0">
-                            <img class="imagemBlocoMontado" id="pos2andar1Pedido"
-                                src="assets/laminas/lamina1-0.png" alt="Lamina2">
+                            <img class="imagemBlocoMontado" id="pos2andar1Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina2">
                         </div>
 
                         <div id="divAlturaLaminaAndar2Pos2" class="absolute0">
-                            <img class="imagemBlocoMontado" id="pos2andar2Pedido"
-                                src="assets/laminas/lamina1-0.png" alt="Lamina2">
+                            <img class="imagemBlocoMontado" id="pos2andar2Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina2">
                         </div>
 
                         <div id="divAlturaLaminaAndar3Pos2" class="absolute0">
-                            <img class="imagemBlocoMontado" id="pos2andar3Pedido"
-                                src="assets/laminas/lamina1-0.png" alt="Lamina2">
+                            <img class="imagemBlocoMontado" id="pos2andar3Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina2">
                         </div>
 
                         <div id="divAlturaPadraoAndar2Pos1" class="absolute0">
@@ -140,18 +138,18 @@
                         </div>
 
                         <div id="divAlturaLaminaAndar1Pos3" class="absolute0">
-                            <img class="imagemBlocoMontado" id="pos3andar1Pedido"
-                                src="assets/laminas/lamina1-0.png" alt="Lamina3">
+                            <img class="imagemBlocoMontado" id="pos3andar1Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina3">
                         </div>
 
                         <div id="divAlturaLaminaAndar2Pos3" class="absolute0">
-                            <img class="imagemBlocoMontado" id="pos3andar2Pedido"
-                                src="assets/laminas/lamina1-0.png" alt="Lamina3">
+                            <img class="imagemBlocoMontado" id="pos3andar2Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina3">
                         </div>
 
                         <div id="divAlturaLaminaAndar3Pos3" class="absolute0">
-                            <img class="imagemBlocoMontado" id="pos3andar3Pedido"
-                                src="assets/laminas/lamina1-0.png" alt="Lamina3">
+                            <img class="imagemBlocoMontado" id="pos3andar3Pedido" src="assets/laminas/lamina1-0.png"
+                                alt="Lamina3">
                         </div>
 
                         <div id="divAlturaPadraoAndar1Pos1" class="absolute0">
@@ -174,20 +172,47 @@
                 </div>
             </div>
         </div>
-    </div>   
-        <!-- BOTÃO VOLTAR - FLUTUANTE ACIMA DO ESTOQUE -->
-        <button class="btn-voltar-flutuante" onclick="window.location.href='/'">
-            <span class="material-symbols-rounded">arrow_back</span> Voltar
-        </button>
+    </div>
+    <!-- BOTÃO VOLTAR - FLUTUANTE ACIMA DO ESTOQUE -->
+    <button class="btn-voltar-flutuante" onclick="window.location.href='/'">
+        <span class="material-symbols-rounded">arrow_back</span> Voltar
+    </button>
 
-        <!-- BOTÃO CORRIGIR ESTOQUE -->
-        <button class="estoque-btn" type="button" onclick="window.location.href='/editar_clp1'">
-            <span class="material-symbols-rounded">inventory</span> Corrigir Estoque
-        </button>
+    <!-- MENU FLUTUANTE -->
+    <div class="floating-menu" id="menuFlutuante">
+        <a href="/listar_pedidos"><i class="fas fa-list"></i> Listar Pedidos</a>
+        <a href="/editar_clp1"><i class="fas fa-tools"></i> Corrigir Estoque</a>
+        <a href="/processo_bancada"><i class="fas fa-cogs"></i> Processo</a>
+        <a href="/"><i class="fas fa-home"></i> Página Inicial</a>  
+    </div>
 
+    <!-- BOTÃO DE MENU -->
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
 
-        <script src="/js/pedido.js"></script>
+    <script src="/js/pedido.js"></script>
 
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menuFlutuante");
+            menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+
+            // Adiciona/remover classe "active" nos links ao abrir
+            const links = menu.querySelectorAll("a");
+            links.forEach(link => {
+                link.classList.toggle("active", menu.style.display === "flex");
+            });
+        }
+
+        // Confirmação de pedido
+        document.querySelectorAll('.btn-confirmar').forEach(button => {
+            button.addEventListener('click', function () {
+                const pedidoId = this.getAttribute('data-id');
+                if (confirm(`Deseja confirmar o pedido #${pedidoId}?`)) {
+                    window.location.href = `/processo_bancada?id=${pedidoId}`;
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

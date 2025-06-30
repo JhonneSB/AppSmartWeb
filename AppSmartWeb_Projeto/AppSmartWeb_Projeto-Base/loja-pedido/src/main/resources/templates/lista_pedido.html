@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Lista de Pedidos - SENAI</title>
+
+    <!-- Fontes e ícones -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- CSS Principal -->
     <link rel="stylesheet" th:href="@{/css/styleLista_PedidosBase.css}">
     <link rel="stylesheet" th:href="@{/css/styleLista_Pedidos.css}">
+    <link rel="stylesheet" th:href="@{/css/styleMenuFlutuante.css}">
     <link rel="stylesheet" th:href="@{/css/headerIsolado.css}" href="/css/headerIsolado.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </head>
+
 <body>
+
     <!-- CABEÇALHO SENAI -->
     <header>
         <div class="left-header">
@@ -20,34 +30,36 @@
             <img src="senailogo.png" alt="Logo SENAI">
         </div>
         <div class="wifi-fixed">
-    <i class="fas fa-signal"></i> <!-- Ícone de barras de sinal -->
-    <span class="wifi-status">Desconectado</span>
-</div>
+            <i class="fas fa-signal"></i>
+            <span class="wifi-status">Desconectado</span>
+        </div>
     </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <div class="main-container">
         <div class="container">
             <h1><span class="material-symbols-rounded">list_alt</span> Lista de Pedidos</h1>
-            
+
             <div class="pedidos-container">
                 <div th:each="pedido : ${pedidos}" class="pedido-card">
                     <div class="pedido-header">
                         <h3>Pedido #<span th:text="${pedido.id}"></span></h3>
-                        <span class="pedido-tipo" th:text="${pedido.tipo == 'simples' ? 'Simples' : pedido.tipo == 'duplo' ? 'Duplo' : 'Triplo'}"></span>
+                        <span class="pedido-tipo"
+                            th:text="${pedido.tipo == 'simples' ? 'Simples' : pedido.tipo == 'duplo' ? 'Duplo' : 'Triplo'}"></span>
                     </div>
-                    
+
                     <div class="blocos-container">
                         <div th:each="bloco, stat : ${pedido.blocos}" class="bloco-item">
-                            <h4>Bloco <span th:text="${stat.count}"></span> - Cor: 
-                                <span th:text="${bloco.cor == 'preto' ? 'Preto' : bloco.cor == 'vermelho' ? 'Vermelho' : bloco.cor == 'azul' ? 'Azul' : 'Nenhuma'}"></span>
+                            <h4>Bloco <span th:text="${stat.count}"></span> - Cor:
+                                <span
+                                    th:text="${bloco.cor == 'preto' ? 'Preto' : bloco.cor == 'vermelho' ? 'Vermelho' : bloco.cor == 'azul' ? 'Azul' : 'Nenhuma'}"></span>
                             </h4>
-                            
+
                             <div class="laminas-info">
                                 <span class="material-symbols-rounded">layers</span>
                                 <span th:text="${bloco.laminas.size()}"></span> lâminas:
                             </div>
-                            
+
                             <div class="laminas-detalhes">
                                 <div th:each="lamina : ${bloco.laminas}" class="lamina-item">
                                     <span class="material-symbols-rounded">colorize</span>
@@ -61,9 +73,8 @@
                                         'Nenhuma'
                                     }"></span>
 
-                                    <span class="lamina-padrao" 
-                                          th:if="${lamina.padrao != null and lamina.padrao != '0'}" 
-                                          th:text="'(' + ${lamina.padrao == '1' ? 'Casa' : 
+                                    <span class="lamina-padrao"
+                                        th:if="${lamina.padrao != null and lamina.padrao != '0'}" th:text="'(' + ${lamina.padrao == '1' ? 'Casa' : 
                                                             lamina.padrao == '2' ? 'Navio' : 
                                                             lamina.padrao == '3' ? 'Estrela' : ''} + ')'">
                                     </span>
@@ -71,7 +82,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="pedido-actions">
                         <button class="btn-confirmar" th:attr="data-id=${pedido.id}">
                             <span class="material-symbols-rounded">check_circle</span> Confirmar Pedido
@@ -81,41 +92,59 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <div th:if="${pedidos.empty}" class="sem-pedidos">
                     <span class="material-symbols-rounded">inbox</span>
                     <p>Nenhum pedido encontrado</p>
                 </div>
             </div>
-                
-            <!-- BOTÃO VOLTAR - FLUTUANTE ACIMA DO ESTOQUE -->
-        <button class="btn-voltar-flutuante" onclick="window.location.href='/pedidos'">
-            <span class="material-symbols-rounded">arrow_back</span> Voltar
-        </button>
-        
-            </div>
+
+            <!-- BOTÃO VOLTAR -->
+            <button class="btn-voltar-flutuante" onclick="window.location.href='/pedidos'">
+                <span class="material-symbols-rounded">arrow_back</span> Voltar
+            </button>
+
         </div>
     </div>
 
-    <!-- BOTÃO CORRIGIR ESTOQUE -->
-    <button class="estoque-btn" type="button" onclick="window.location.href='/editar_clp1'">
-        <span class="material-symbols-rounded">inventory</span> Corrigir Estoque
-    </button>
+    <!-- MENU FLUTUANTE -->
+    <div class="floating-menu" id="menuFlutuante">
+        <a href="/pedidos"><i class="fas fa-list"></i> Pedidos</a>
+        <a href="/editar_clp1"><i class="fas fa-tools"></i> Corrigir Estoque</a>
+        <a href="/processo_bancada"><i class="fas fa-cogs"></i> Processo</a>
+        <a href="/"><i class="fas fa-home"></i> Página Inicial</a>
+    </div>
 
+    <!-- BOTÃO DE MENU -->
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
+
+    <!-- SCRIPTS -->
     <script src="/js/lista_pedido.js"></script>
+    <script src="/js/statusConexao.js"></script>
+
     <script>
-        // Adicionando funcionalidade para o botão de confirmar pedido
+        function toggleMenu() {
+            const menu = document.getElementById("menuFlutuante");
+            menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+
+            // Adiciona/remover classe "active" nos links ao abrir
+            const links = menu.querySelectorAll("a");
+            links.forEach(link => {
+                link.classList.toggle("active", menu.style.display === "flex");
+            });
+        }
+
+        // Confirmação de pedido
         document.querySelectorAll('.btn-confirmar').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const pedidoId = this.getAttribute('data-id');
-                if(confirm(`Deseja confirmar o pedido #${pedidoId}?`)) {
+                if (confirm(`Deseja confirmar o pedido #${pedidoId}?`)) {
                     window.location.href = `/processo_bancada?id=${pedidoId}`;
                 }
             });
         });
     </script>
 
-<script src="/js/statusConexao.js"></script>
-
 </body>
+
 </html>
