@@ -10,7 +10,7 @@ import com.exemplo.loja_pedido.model.Estoque;
 import com.exemplo.loja_pedido.repository.EstoqueRepository;
 
 @Service
-public class estoqueService {
+public class EstoqueService {
 
     @Autowired
     private EstoqueRepository estoqueRepository;

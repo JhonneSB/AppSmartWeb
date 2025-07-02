@@ -373,7 +373,7 @@ public class SmartController {
             List<LaminaDTO> laminas = bloco.getLaminas();
             for (int i = 0; i < Math.min(3, laminas.size()); i++) {
                 dados[indexBase + 2 + i] = Integer.parseInt(laminas.get(i).getCor());
-                dados[indexBase + 5 + i] = Integer.parseInt(laminas.get(i).getCor());
+                dados[indexBase + 5 + i] = Integer.parseInt(laminas.get(i).getPadrao());
             }
 
             dados[indexBase + 8] = 0; // processamento_Andar_X

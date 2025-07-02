@@ -122,10 +122,14 @@ public ResponseEntity<String> excluirPedido(@PathVariable Long id) {
             .body("Erro ao excluir pedido: " + e.getMessage());
     }
 }
-
+@GetMapping("/editar_clp4")
+public String editarClp4(Model model) {
+return "editar_clp4"; // Retorna a tela que você criou acima
+}
 @GetMapping("/editar_clp1")
 public String editarClp1(Model model) {
 return "editar_clp1"; // Retorna a tela que você criou acima
+
 
 }
 @GetMapping("/listar_pedidos")
