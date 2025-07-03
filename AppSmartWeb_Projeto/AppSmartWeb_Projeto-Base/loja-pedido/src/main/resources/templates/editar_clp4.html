@@ -226,52 +226,54 @@
         function toggleMenu() {
             const menu = document.getElementById("menuFlutuante");
             menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
-
+    
             const links = menu.querySelectorAll("a");
             links.forEach(link => {
                 link.classList.toggle("active", menu.style.display === "flex");
             });
         }
-
-        // Carrega os dados da expedição e popula a grid
-        function carregarExpedicao() {
-            fetch('/expedicao')
-                .then(response => response.json())
-                .then(data => {
-                    const grid = document.getElementById('expedicao-grid');
-                    grid.innerHTML = '';
-
-                    for (let i = 1; i <= 12; i++) {
-                        const cell = document.createElement('div');
-                        cell.classList.add('expedicao-cell');
-                        cell.dataset.position = i;
-
-                        const expedicao = data.find(e => e.posicaoExpedicao === i);
-                        if (expedicao) {
-                            cell.classList.add('expedicao-ocupada');
-                            cell.textContent = `Pedido: ${expedicao.orderNumber}`;
-                        } else {
-                            cell.classList.add('expedicao-vazia');
-                            cell.textContent = `Posição ${i}`;
-                        }
-
-                        cell.addEventListener('click', () => editarPosicaoExpedicao(cell, i));
-                        grid.appendChild(cell);
+    
+        // Função que carrega os dados via /expedicao/valores-expedicao e atualiza a grid
+        async function carregarExpedicaoViaValores() {
+            try {
+                const response = await fetch('/expedicao/valores-expedicao');
+                const data = await response.json();
+                const grid = document.getElementById('expedicao-grid');
+                grid.innerHTML = '';
+    
+                for (let i = 1; i <= 12; i++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('expedicao-cell');
+                    cell.dataset.position = i;
+    
+                    const key = `P${i}`;
+                    const pedidoRaw = data[key];
+                    const pedido = Number(pedidoRaw);
+    
+                    if (!isNaN(pedido) && pedido > 0) {
+                        cell.classList.add('expedicao-ocupada');
+                        cell.textContent = `Pedido: ${pedido}`;
+                    } else {
+                        cell.classList.add('expedicao-vazia');
+                        cell.textContent = `Posição ${i}`;
                     }
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar expedição:', error);
-                    alert('Erro ao carregar dados da expedição.');
-                });
+    
+                    cell.addEventListener('click', () => editarPosicaoExpedicao(cell, i));
+                    grid.appendChild(cell);
+                }
+            } catch (erro) {
+                console.error('Erro ao carregar via valores-expedicao:', erro);
+                alert('Erro ao carregar expedição atualizada.');
+            }
         }
-
+    
         // Função para editar a posição da expedição
         function editarPosicaoExpedicao(cell, position) {
             const currentValue = cell.classList.contains('expedicao-ocupada') ?
                 parseInt(cell.textContent.replace('Pedido: ', '')) : null;
-
+    
             const novoPedido = prompt('Digite o número do pedido para esta posição:', currentValue || '');
-
+    
             if (novoPedido !== null) {
                 if (novoPedido.trim() === '') {
                     // Limpar posição
@@ -288,17 +290,17 @@
                 }
             }
         }
-
-        // Salvar os dados atualizados da expedição no servidor
-        document.getElementById('atualizar-expedicao').addEventListener('click', () => {
+    
+        // Função para atualizar os dados da expedição no servidor
+        async function updateExpedicao() {
             const grid = document.getElementById('expedicao-grid');
             const cells = grid.querySelectorAll('.expedicao-cell');
             const expedicaoData = [];
-
+    
             cells.forEach(cell => {
                 const posicao = parseInt(cell.dataset.position);
                 const isOcupada = cell.classList.contains('expedicao-ocupada');
-
+    
                 if (isOcupada) {
                     const orderNumber = parseInt(cell.textContent.replace('Pedido: ', ''));
                     expedicaoData.push({
@@ -307,31 +309,67 @@
                     });
                 }
             });
-
-            fetch('/expedicao/corrigirExpedicao', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(expedicaoData)
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Expedição atualizada com sucesso!');
-                        carregarExpedicao();
-                    } else {
-                        alert('Erro ao atualizar expedição.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro:', error);
-                    alert('Erro de rede ao tentar atualizar expedição.');
+    
+            try {
+                const response = await fetch('/expedicao/corrigirExpedicao', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(expedicaoData)
                 });
+    
+                return response.ok;
+            } catch (error) {
+                console.error('Erro ao atualizar expedição:', error);
+                return false;
+            }
+        }
+    
+        // Função para enviar dados para o CLP de expedição
+        async function enviarParaClpExpedicao() {
+            const ipsBancada = JSON.parse(sessionStorage.getItem('ipsBancada'));
+            const ipClp = ipsBancada ? ipsBancada.expedicao : null;
+            try {
+                const response = await fetch("/clp/enviar-expedicao", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ ipClp: ipClp })
+                });
+    
+                return response.ok;
+            } catch (erro) {
+                console.error("Erro ao enviar para CLP:", erro);
+                return false;
+            }
+        }
+    
+        // Evento de clique no botão Salvar Expedição
+        document.getElementById('atualizar-expedicao').addEventListener('click', async () => {
+            const expedicaoAtualizada = await updateExpedicao();
+    
+            if (expedicaoAtualizada) {
+                const clpAtualizado = await enviarParaClpExpedicao();
+    
+                if (clpAtualizado) {
+                    alert('Expedição atualizada e enviada para o CLP com sucesso!');
+                } else {
+                    alert('Expedição atualizada, mas falha ao enviar para CLP!');
+                }
+    
+                await carregarExpedicaoViaValores();
+            } else {
+                alert('Falha ao atualizar expedição!');
+            }
         });
-
-        // Botão de atualizar
-        document.getElementById('atualizar').addEventListener('click', carregarExpedicao);
-
-        // Carrega os dados ao abrir a página
-        window.addEventListener('load', carregarExpedicao);
+    
+        // Botão de atualizar (recarrega os dados via /expedicao/valores-expedicao)
+        document.getElementById('atualizar').addEventListener('click', async () => {
+            await carregarExpedicaoViaValores();
+        });
+    
+        // Carrega os dados ao abrir a página, usando /expedicao/valores-expedicao
+        window.addEventListener('load', carregarExpedicaoViaValores);
     </script>
 
     <script src="/js/statusConexao.js"></script>

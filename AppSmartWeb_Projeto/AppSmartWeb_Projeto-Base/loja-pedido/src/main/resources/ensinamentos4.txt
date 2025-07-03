@@ -1,0 +1,203 @@
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            carregarValoresEstoque(); // Chama a função async
+            carregarValoresExpedicao();
+
+            // Atualiza dinamicamente ao digitar
+
+        });
+
+        // Função async separada
+        // Função para alimentar o gestor do magazine de estoque
+        async function carregarValoresEstoque() {
+            console.log("Carregar valores Estoque");
+            const inputs = document.querySelectorAll(".input-celula");
+            try {
+                const response = await fetch("/valores-estoque");
+                const data = await response.json();
+
+                inputs.forEach((input, index) => {
+                    const pos = "P" + (index + 1);
+                    if (data[pos] !== undefined) {
+                        input.value = data[pos];
+                        input.classList.remove("cor-0", "cor-1", "cor-2", "cor-3");
+                        input.classList.add("cor-" + data[pos]);
+                    }
+                });
+            } catch (erro) {
+                console.error("Erro ao carregar valores:", erro);
+            }
+            inputs.forEach(input => {
+                const applyColor = () => {
+                    const val = parseInt(input.value);
+                    input.classList.remove("cor-0", "cor-1", "cor-2", "cor-3");
+                    if (!isNaN(val) && val >= 0 && val <= 3) {
+                        input.classList.add("cor-" + val);
+                    }
+                };
+
+                applyColor(); // Aplicar estilo inicial
+                input.addEventListener("input", applyColor);
+            });
+        }
+
+        // Função para carregar valores da expedição
+        // Função para alimentar o gestor do magazine de expedição
+        async function carregarValoresExpedicao() {
+            console.log("Carregar valores Expedição");
+            try {
+                const response = await fetch("/valores-expedicao");
+                const data = await response.json();
+
+                const expedicaoInputs = document.querySelectorAll(".grid.expedicao .input-expedicao");
+
+                expedicaoInputs.forEach((input, index) => {
+                    const pos = "P" + (index + 1);
+                    if (data[pos] !== undefined) {
+                        input.value = "OP:" + data[pos];
+                    }
+                });
+            } catch (erro) {
+                console.error("Erro ao carregar valores:", erro);
+            }
+        }
+
+        // window.addEventListener("DOMContentLoaded", function () {
+        //     carregarValoresExpedicao();
+        // });
+
+        // Função para atualizar a tabela Estoque na base de dados
+        async function updateEstoque() {
+            const estoqueInputs = document.querySelectorAll(".grid.estoque .input-celula:not(.invisivel)");
+            const payload = {};
+
+            estoqueInputs.forEach((input, index) => {
+                const posicao = index + 1;
+                const valor = parseInt(input.value);
+                if (!isNaN(valor)) {
+                    payload["P:" + posicao] = valor;
+                }
+            });
+
+            try {
+                const response = await fetch("/estoque/salvar", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload) // apenas os dados, sem IP
+                });
+
+                if (!response.ok) {
+                    alert("Erro ao atualizar estoque.");
+                }
+            } catch (erro) {
+                console.error("Erro na requisição:", erro);
+            }
+        }
+
+        // Função para atualizar a tabela Expedição na base de dados
+        async function updateExpedicao() {
+            const expedicaoInputs = document.querySelectorAll(".grid.expedicao .input-expedicao");
+            const payload = {};
+
+            expedicaoInputs.forEach((input, index) => {
+                const posicao = index + 1;
+                const partes = input.value.split(":");
+                const valor = parseInt(partes[1]); // Pega só o número após os dois pontos
+                if (!isNaN(valor)) {
+                    payload["OP:" + posicao] = valor;
+                }
+            });
+
+            // Captura o IP do CLP do input com id="hostIpExpedicao"
+            const ipClp = document.getElementById("hostIpExpedicao").value.trim();
+
+            // Monta o objeto com dados e IP
+            const dadosComIp = {
+                ip: ipClp,
+                dados: payload
+            };
+
+            try {
+                const response = await fetch("/expedicao/salvar", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    //alert("Expedição atualizada com sucesso!");
+                } else {
+                    alert("Erro ao atualizar expedição.");
+                }
+            } catch (erro) {
+                console.error("Erro na requisição:", erro);
+            }
+        }
+
+        // Função para atualizar o bloco de dados (posições do estoque) na memória do clp Estoque
+        async function enviarParaClpEstoque() {
+            const ipEstoque = document.getElementById("hostIpEstoque")?.value;
+
+            if (!ipEstoque) {
+                alert("IP do CLP de Estoque não informado.");
+                return;
+            }
+
+            try {
+                const response = await fetch("/clp/enviar-estoque", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ ipClp: ipEstoque })
+                });
+
+                if (response.ok) {
+                    console.log("Dados de estoque enviados com sucesso para o CLP!");
+                } else {
+                    const textoErro = await response.text();
+                    alert("Erro ao enviar dados do estoque para o CLP:\n" + textoErro);
+                }
+            } catch (erro) {
+                console.error("Erro na requisição:", erro);
+                alert("Erro na comunicação com o servidor.");
+            }
+        }
+
+        // Função para atualizar o bloco de dados (operações na expedição) na memória do clp Expedição
+        async function enviarParaClpExpedicao() {
+            const ipExpedicao = document.getElementById("hostIpExpedicao")?.value;
+
+            if (!ipExpedicao) {
+                alert("IP do CLP de Expedição não informado.");
+                return;
+            }
+
+            try {
+                const response = await fetch("/clp/enviar-expedicao", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ ipClp: ipExpedicao })
+                });
+
+                if (response.ok) {
+                    console.log("Dados da expedição enviados com sucesso para o CLP!");
+                } else {
+                    const textoErro = await response.text();
+                    alert("Erro ao enviar dados da expedição para o CLP:\n" + textoErro);
+                }
+            } catch (erro) {
+                console.error("Erro na requisição:", erro);
+                alert("Erro na comunicação com o servidor.");
+            }
+        }
+
+
+        // Associar funções aos botões
+        // document.querySelector(".update-estoque button").addEventListener("click", updateEstoque);
+        // document.querySelector(".update-expedicao button").addEventListener("click", updateExpedicao);
+
+    </script>

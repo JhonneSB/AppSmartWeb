@@ -319,6 +319,7 @@ public class SmartService {
         }
 
         posicaoExpedicaoSolicitada = buscarPrimeiraPosicaoLivreExp();
+        System.out.println("TESTE POSICAO LIVRE: "+posicaoExpedicaoSolicitada);
 
         try {
 
@@ -331,7 +332,7 @@ public class SmartService {
 
             // plcConnector.writeBit(9, 62, 0, Boolean.parseBoolean("FALSE"));
             // Iniciar pedido
-            plcConnector.writeBit(9, 62, 0, Boolean.parseBoolean("TRUE"));
+           plcConnector.writeBit(9, 62, 0, Boolean.parseBoolean("TRUE"));
 
         } catch (Exception ex) {
 
@@ -983,6 +984,7 @@ public class SmartService {
                 //System.out.println("Posição disponível no Magazine Expedição: " + posExpedicaoLivre);
                 // Atualiza a variável PosicaoGuardarExpedicao no CLP EXPEDIÇÂO
                 try {
+                    System.out.println("ESSE AQUI É O CERTO POSICAO SOLICITADA: "+posicaoExpedicaoSolicitada);
                     plcConnectorExp.writeInt(9, 4, posicaoExpedicaoSolicitada);   // Atualiza a variável PosicaoGuardarExpedicao no CLP EXPEDIÇÂO
 
                 } catch (Exception e) {

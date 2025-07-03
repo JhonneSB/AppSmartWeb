@@ -40,7 +40,7 @@ public class PedidoController {
         return "processo_bancada"; //
     }
 
-        @GetMapping("/pedidos")
+    @GetMapping("/pedidos")
     public String pedido(Model model) {
         List<Pedido> pedidos = pedidoRepository.findAll();
         model.addAttribute("pedidos", pedidos);
@@ -49,8 +49,8 @@ public class PedidoController {
 
     @PostMapping("/store/orders")
     @ResponseBody
-    public  String receberPedidos(@RequestBody List<PedidoDTO> pedidosDto) {
-        System.out.println("PEDIDOS: "+ pedidosDto.size());
+    public String receberPedidos(@RequestBody List<PedidoDTO> pedidosDto) {
+        System.out.println("PEDIDOS: " + pedidosDto.size());
         for (int i = 0; i < pedidosDto.size(); i++) {
             PedidoDTO pedidoDTO = pedidosDto.get(i);
 
@@ -76,7 +76,9 @@ public class PedidoController {
 
             pedido.setBlocos(blocos);
 
-            pedidoRepository.save(pedido); // salva tudo em cascata
+            Integer maxOrder = pedidoRepository.findMaxOrderProduction(); // já retorna 0 se não houver pedidos
+            pedido.setOrderProduction(maxOrder + 1);
+            pedidoRepository.save(pedido);
 
             // Impressão no console
             System.out.println("=== Pedido " + (i + 1) + " ===");
@@ -105,38 +107,40 @@ public class PedidoController {
         return pedidoRepository.findAll();
     }
 
-    @DeleteMapping("/api/pedidos/{id}")  // Alterado para corresponder ao chamado no JS
-public ResponseEntity<String> excluirPedido(@PathVariable Long id) {
-    try {
-        Optional<Pedido> pedido = pedidoRepository.findById(id);
-        
-        if (pedido.isPresent()) {
-            pedidoRepository.deleteById(id);
-            return ResponseEntity.ok("DELETADO");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Pedido não encontrado");
+    @DeleteMapping("/api/pedidos/{id}") // Alterado para corresponder ao chamado no JS
+    public ResponseEntity<String> excluirPedido(@PathVariable Long id) {
+        try {
+            Optional<Pedido> pedido = pedidoRepository.findById(id);
+
+            if (pedido.isPresent()) {
+                pedidoRepository.deleteById(id);
+                return ResponseEntity.ok("DELETADO");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Pedido não encontrado");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao excluir pedido: " + e.getMessage());
         }
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body("Erro ao excluir pedido: " + e.getMessage());
     }
-}
-@GetMapping("/editar_clp4")
-public String editarClp4(Model model) {
-return "editar_clp4"; // Retorna a tela que você criou acima
-}
-@GetMapping("/editar_clp1")
-public String editarClp1(Model model) {
-return "editar_clp1"; // Retorna a tela que você criou acima
 
+    @GetMapping("/editar_clp4")
+    public String editarClp4(Model model) {
+        return "editar_clp4"; // Retorna a tela que você criou acima
+    }
 
-}
-@GetMapping("/listar_pedidos")
-public String listarPedidosPage(Model model) {
-    List<Pedido> pedidos = pedidoRepository.findAll();
-    model.addAttribute("pedidos", pedidos);
-    return "lista_pedido"; // Nome do template Thymeleaf
-}
+    @GetMapping("/editar_clp1")
+    public String editarClp1(Model model) {
+        return "editar_clp1"; // Retorna a tela que você criou acima
+
+    }
+
+    @GetMapping("/listar_pedidos")
+    public String listarPedidosPage(Model model) {
+        List<Pedido> pedidos = pedidoRepository.findAll();
+        model.addAttribute("pedidos", pedidos);
+        return "lista_pedido"; // Nome do template Thymeleaf
+    }
 
 }

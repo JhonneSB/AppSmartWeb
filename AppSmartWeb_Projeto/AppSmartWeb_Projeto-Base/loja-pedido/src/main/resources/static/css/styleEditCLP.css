@@ -105,8 +105,8 @@ h5:hover::after {
 
 /* Estados de cores */
 .color-1 {
-    background-color: #0017eb;
-    border: 2px solid #0017eb;
+  background-color: #000000;
+  border: 2px solid #000000;
 }
 
 .color-2 {
@@ -115,8 +115,8 @@ h5:hover::after {
 }
 
 .color-3 {
-    background-color: #000000;
-    border: 2px solid #000000;
+  background-color: #0017eb;
+  border: 2px solid #0017eb;
 }
 
 /* Botões */

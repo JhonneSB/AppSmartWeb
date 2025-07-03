@@ -25,9 +25,7 @@
             z-index: 1000;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transition: background 0.3s;
-
             display: flex;
-            /* Centraliza */
             align-items: center;
             justify-content: center;
         }
@@ -49,9 +47,7 @@
             z-index: 999;
             animation: fadeIn 0.2s ease-in-out;
             width: 180px;
-            /* 🔹 define largura menor */
         }
-
 
         .floating-menu a {
             color: white;
@@ -67,11 +63,9 @@
             background: transparent;
         }
 
-
         .floating-menu a:hover,
         .floating-menu a.active {
             background-color: #1e88e5;
-            /* azul bonito */
             border: none;
             outline: none;
         }
@@ -88,11 +82,9 @@
             }
         }
     </style>
-
 </head>
 
 <body>
-
     <!-- CABEÇALHO -->
     <header>
         <div class="left-header">
@@ -103,7 +95,7 @@
             <img src="senailogo.png" alt="Logo SENAI">
         </div>
         <div class="wifi-fixed">
-            <i class="fas fa-signal"></i> <!-- Ícone de barras de sinal -->
+            <i class="fas fa-signal"></i>
             <span class="wifi-status">Desconectado</span>
         </div>
     </header>
@@ -135,32 +127,72 @@
 
     <!-- SCRIPT JS -->
     <script>
-
         const grid = document.getElementById('clp1-grid');
         const byteArray = new Array(28).fill(0);
 
-        grid.innerHTML = '';
+        // Função para carregar os valores do estoque
+        async function carregarValoresEstoque() {
+            try {
+                const response = await fetch('/valores-estoque');
+                const data = await response.json();
 
-        byteArray.forEach((val, i) => {
-            const cell = document.createElement("div");
-            cell.classList.add("cell1", `color-${val}`);
-            cell.textContent = i + 1;
-            grid.appendChild(cell);
+                // Limpa o grid antes de carregar novos valores
+                grid.innerHTML = '';
 
-            cell.addEventListener("click", () => {
-                if (cell.classList.contains('color-0')) {
-                    cell.classList.replace('color-0', 'color-1');
-                } else if (cell.classList.contains('color-1')) {
-                    cell.classList.replace('color-1', 'color-2');
-                } else if (cell.classList.contains('color-2')) {
-                    cell.classList.replace('color-2', 'color-3');
-                } else if (cell.classList.contains('color-3')) {
-                    cell.classList.replace('color-3', 'color-0');
+                // Preenche o grid com os valores do estoque
+                for (let i = 0; i < 28; i++) {
+                    const pos = "P" + (i + 1);
+                    const val = data[pos] || 0;
+
+                    const cell = document.createElement("div");
+                    cell.classList.add("cell1", `color-${val}`);
+                    cell.textContent = i + 1;
+                    grid.appendChild(cell);
+
+                    cell.addEventListener("click", () => {
+                        if (cell.classList.contains('color-0')) {
+                            cell.classList.replace('color-0', 'color-1');
+                        } else if (cell.classList.contains('color-1')) {
+                            cell.classList.replace('color-1', 'color-2');
+                        } else if (cell.classList.contains('color-2')) {
+                            cell.classList.replace('color-2', 'color-3');
+                        } else if (cell.classList.contains('color-3')) {
+                            cell.classList.replace('color-3', 'color-0');
+                        }
+                    });
                 }
-            });
-        });
+            } catch (error) {
+                console.error("Erro ao carregar valores do estoque:", error);
+                // Se houver erro, cria grid padrão
+                criarGridPadrao();
+            }
+        }
 
-        document.getElementById("atualizar").addEventListener("click", () => {
+        // Função para criar grid padrão (quando não consegue carregar dados)
+        function criarGridPadrao() {
+            grid.innerHTML = '';
+            byteArray.forEach((val, i) => {
+                const cell = document.createElement("div");
+                cell.classList.add("cell1", `color-${val}`);
+                cell.textContent = i + 1;
+                grid.appendChild(cell);
+
+                cell.addEventListener("click", () => {
+                    if (cell.classList.contains('color-0')) {
+                        cell.classList.replace('color-0', 'color-1');
+                    } else if (cell.classList.contains('color-1')) {
+                        cell.classList.replace('color-1', 'color-2');
+                    } else if (cell.classList.contains('color-2')) {
+                        cell.classList.replace('color-2', 'color-3');
+                    } else if (cell.classList.contains('color-3')) {
+                        cell.classList.replace('color-3', 'color-0');
+                    }
+                });
+            });
+        }
+
+        // Função para atualizar o estoque no servidor
+        async function updateEstoque() {
             const blockList = document.getElementsByClassName("cell1");
             const blockArray = [];
 
@@ -180,35 +212,85 @@
                 });
             }
 
-            fetch('/corrigirEstoque', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(blockArray)
-            })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = "/";
-                    } else {
-                        alert("Erro ao atualizar o estoque.");
-                        console.error("Erro no servidor:", response.status);
-                    }
-                })
-                .catch(error => {
-                    console.error("Erro de rede:", error);
-                    alert("Erro de rede ao tentar atualizar o estoque.");
+            try {
+                const response = await fetch('/corrigirEstoque', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(blockArray)
                 });
-        });
-        window.onload
-    </script>
 
-    <script>
+                return response.ok;
+            } catch (error) {
+                console.error("Erro ao atualizar estoque:", error);
+                return false;
+            }
+        }
+
+        // Função para enviar dados para o CLP
+        async function enviarParaClpEstoque() {
+            const blockList = document.getElementsByClassName("cell1");
+            const ipsBancada = JSON.parse(sessionStorage.getItem('ipsBancada'));
+            const ipClp = ipsBancada ? ipsBancada.estoque : null;
+            const payload = {
+                ipClp: ipClp // ou pegue dinamicamente se precisar
+            };
+
+            for (let i = 0; i < blockList.length; i++) {
+                const cell = blockList[i];
+                let colorValue = 0;
+                if (cell.classList.contains('color-1')) colorValue = 1;
+                else if (cell.classList.contains('color-2')) colorValue = 2;
+                else if (cell.classList.contains('color-3')) colorValue = 3;
+
+                payload["P" + (i + 1)] = colorValue;
+            }
+
+            try {
+                const response = await fetch('/clp/enviar-estoque', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                return response.ok;
+            } catch (error) {
+                console.error("Erro ao enviar para CLP:", error);
+                return false;
+            }
+        }
+
+        // Evento de clique no botão Atualizar
+        document.getElementById("atualizar").addEventListener("click", async () => {
+            // 1. Atualiza o estoque no servidor
+            const estoqueAtualizado = await updateEstoque();
+
+            if (estoqueAtualizado) {
+                // 2. Se atualizou com sucesso, envia para o CLP
+                const clpAtualizado = await enviarParaClpEstoque();
+
+                if (clpAtualizado) {
+                    // 3. Se tudo ok, redireciona para home
+                    window.location.href = "/";
+                } else {
+                    alert("Estoque atualizado, mas falha ao enviar para CLP!");
+                }
+            } else {
+                alert("Falha ao atualizar estoque!");
+            }
+        });
+
+        // Carrega os valores quando a página é aberta
+        document.addEventListener("DOMContentLoaded", carregarValoresEstoque);
+
+        // Funções do menu flutuante
         function toggleMenu() {
             const menu = document.getElementById("menuFlutuante");
             menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
 
-            // Adiciona/remover classe "active" nos links ao abrir
             const links = menu.querySelectorAll("a");
             links.forEach(link => {
                 link.classList.toggle("active", menu.style.display === "flex");
