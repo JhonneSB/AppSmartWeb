@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.exemplo.loja_pedido.service.PlcConnector;
 import com.exemplo.loja_pedido.service.PlcReaderTask;
-import com.exemplo.loja_pedido.service.SmartClient;
+import com.exemplo.loja_pedido.service.SmartService;
 import com.exemplo.loja_pedido.service.SmartClient.PlcConnectionManager;
 
 @RestController
@@ -32,7 +32,7 @@ public class ClpController {
     private static byte[] dadosClp3;
     private static byte[] dadosClp4;
 
-    private SmartClient smartService = new SmartClient();
+    private SmartService smartService = new SmartService();
 
     @PostMapping("/start-leituras")
     public ResponseEntity<String> startLeituras(@RequestBody Map<String, String> ips) {

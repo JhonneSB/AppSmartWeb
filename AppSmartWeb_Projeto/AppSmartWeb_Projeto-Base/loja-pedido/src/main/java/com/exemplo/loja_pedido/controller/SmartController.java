@@ -38,10 +38,10 @@ public class SmartController {
     private final ScheduledExecutorService leituraExecutor = Executors.newScheduledThreadPool(4);
     private final Map<String, ScheduledFuture<?>> leituraFutures = new ConcurrentHashMap<>();
 
-    // private static byte[] dadosClp1;
-    // private static byte[] dadosClp2;
-    // private static byte[] dadosClp3;
-    // private static byte[] dadosClp4;
+     private static byte[] dadosClp1;
+     private static byte[] dadosClp2;
+     private static byte[] dadosClp3;
+     private static byte[] dadosClp4;
     @Autowired
     private SmartService smartService;
 

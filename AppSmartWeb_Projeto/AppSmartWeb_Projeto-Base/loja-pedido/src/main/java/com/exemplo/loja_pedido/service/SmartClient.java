@@ -64,26 +64,4 @@ public class PlcConnectionManager {
 
 }
 
-
-public void clpEstoque(String ip, byte[] dadosClp1) {
-
-	System.out.println("Estou no Estoque");
-}
-
-public void clpProcesso(String ip, byte[] dadosClp2) {
-
-	System.out.println("Estou no Estoque");
-}
-
-public void clpMontagem(String ip, byte[] dadosClp3) {
-
-	System.out.println("Estou no Estoque");
-}
-
-public void clpExpedicao(String ip, byte[] dadosClp4) {
-
-	System.out.println("Estou no Estoque");
-}
-
-
 }

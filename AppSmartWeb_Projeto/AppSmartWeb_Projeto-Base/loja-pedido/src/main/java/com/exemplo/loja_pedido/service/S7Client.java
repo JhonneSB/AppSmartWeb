@@ -164,8 +164,6 @@ public class S7Client {
 
         if (type.toLowerCase().equals("boolean")) {
 
-            System.out.println("Aqui Boolean: " + value);
-
             buffer.putShort((short) lenghtTag); // Length
             buffer.put((byte) ((boolean) value ? 0x01 : 0x00));
 
@@ -315,7 +313,6 @@ public class S7Client {
                 default -> throw new IllegalArgumentException("Tipo de variável não suportado.");
             }
 
-            System.out.println("Retorno de Leitura: " + value);
             return value;
 
         } catch (Exception e) {
@@ -328,8 +325,6 @@ public class S7Client {
         if (outputStream == null) {
             throw new Exception("Conexão não estabelecida. Chame o método connect() primeiro.");
         }
-
-        System.out.println("Tamanho BOOLEAN: " + size);
 
         byte[] packet = createWriteRequest(db, offset, bit, size, type, value);
 

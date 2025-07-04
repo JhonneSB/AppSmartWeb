@@ -544,7 +544,7 @@ public class SmartService {
                     HttpEntity<Map<String, Integer>> request = new HttpEntity<>(dadosMap, headers);
 
                     // Envia a requisição
-                    ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/estoque/salvar", request, String.class);
+                    ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8081/estoque/salvar", request, String.class);
                     System.out.println("Resposta ao salvar estoque no banco: " + response.getBody());
 
                 } catch (Exception e) {
@@ -587,7 +587,7 @@ public class SmartService {
                     HttpEntity<Map<String, Integer>> request = new HttpEntity<>(dadosMap, headers);
 
                     // Envia a requisição
-                    ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/estoque/salvar", request, String.class);
+                    ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8081/estoque/salvar", request, String.class);
                     System.out.println("Resposta ao salvar estoque no banco: " + response.getBody());
 
                 } catch (Exception e) {
@@ -1053,7 +1053,7 @@ public class SmartService {
                     HttpEntity<Map<String, Integer>> request = new HttpEntity<>(dadosExp, headers);
 
                     ResponseEntity<String> response = restTemplate.postForEntity(
-                            "http://localhost:8080/expedicao/salvar",
+                            "http://localhost:8081/expedicao/salvar",
                             request,
                             String.class
                     );
@@ -1107,7 +1107,7 @@ public class SmartService {
 
                     // Chama o endpoint que agora deleta do banco quando valor == 0
                     ResponseEntity<String> response = restTemplate.postForEntity(
-                            "http://localhost:8080/expedicao/salvar",
+                            "http://localhost:8081/expedicao/salvar",
                             request,
                             String.class
                     );
