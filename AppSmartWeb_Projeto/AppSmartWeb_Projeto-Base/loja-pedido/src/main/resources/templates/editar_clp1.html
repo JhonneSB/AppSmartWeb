@@ -1,47 +1,52 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Corrigir Estoque</title>
+    <title>Gestão de Estoque e Expedição</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/styleEditCLP.css}">
     <link rel="stylesheet" th:href="@{/css/headerIsolado.css}" href="/css/headerIsolado.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-    <style>
-        .menu-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 55px;
-            height: 55px;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
 
-        .menu-button:hover {
-            background-color: #555;
-        }
+    <style>
+      .menu-button {
+    position: fixed;
+    bottom: 65px;
+    right: 20px;
+
+    background-color: #004A93; /* cor do fundo da imagem */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    font-size: 24px;
+    font-weight: bold;  
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-button:hover {
+    background-color: #00376e; /* cor um pouco mais escura no hover */
+}
+
 
         .floating-menu {
             position: fixed;
-            bottom: 90px;
+            bottom: 150px;
             right: 20px;
             background-color: #1e88e5d4;
             border-radius: 8px;
             padding: 6px 0;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+
             display: none;
             flex-direction: column;
             z-index: 999;
@@ -81,6 +86,104 @@
                 transform: translateY(0);
             }
         }
+
+        /* Estilos para a seção de expedição */
+        #expedicao-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 90px);
+            gap: 10px;
+            margin-top: 10px;
+            padding: 15px;
+
+            max-width: 500px;
+        }
+
+        .expedicao-cell {
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .expedicao-vazia {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .expedicao-ocupada {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        #atualizar-expedicao {
+            margin: 15px 0;
+            padding: 10px 20px;
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #atualizar-expedicao:hover {
+            background-color: #1565c0;
+        }
+
+        /* Layout da página unificada */
+        .container-principal {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .secao {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+            margin: 10px;
+        }
+
+        h5 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            padding: 10px 15px;
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-group button:hover {
+            background-color: #1565c0;
+        }
     </style>
 </head>
 
@@ -101,32 +204,197 @@
     </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
-    <h5>Gestão de Estoque</h5>
-    <div class="container1">
-        <div id="clp1-grid" class="grid1"></div>
-        <div class="button-group">
-            <button type="button" onclick="window.location.href='/'">
-                <i class="fas fa-arrow-left"></i> Voltar
-            </button>
-            <button id="atualizar" type="button">
-                <i class="fas fa-sync-alt"></i> Atualizar
-            </button>
-
-            <!-- MENU FLUTUANTE -->
-            <div class="floating-menu" id="menuFlutuante">
-                <a href="/pedidos"><i class="fas fa-list"></i> Pedidos</a>
-                <a href="/listar_pedidos"><i class="fas fa-clipboard-list"></i> Listar Pedidos</a>
-                <a href="/processo_bancada"><i class="fas fa-cogs"></i> Processo</a>
-                <a href="/"><i class="fas fa-home"></i> Página Inicial</a>
+    <div class="container-principal">
+        <!-- Seção de Estoque -->
+        <div class="secao">
+            <h5>Gestão de Estoque</h5>
+            <div class="container1">
+                <div id="clp1-grid" class="grid1"></div>
+                <button id="atualizar" type="button">
+                    <i class="fas fa-sync-alt"></i> Atualizar Estoque
+                </button>
             </div>
+        </div>
 
-            <!-- BOTÃO DE MENU -->
-            <button class="menu-button" onclick="toggleMenu()">☰</button>
+        <!-- Seção de Expedição -->
+        <div class="secao">
+            <h5>Gestão de Expedição</h5>
+            <div id="expedicao-grid"></div>
+            <button id="atualizar-expedicao">
+                <i class="fas fa-save"></i> Salvar Expedição
+            </button>
         </div>
     </div>
 
+    <!-- BOTÃO VOLTAR -->
+    <button class="btn-voltar-flutuante" onclick="window.location.href='/'">
+        <span class="material-symbols-rounded">arrow_back</span> Voltar
+    </button>
+
+    </div>
+    </div>
+
+    <!-- MENU FLUTUANTE -->
+    <div class="floating-menu" id="menuFlutuante">
+        <a href="/pedidos"><i class="fas fa-list"></i> Efetuar Pedidos</a>
+        <a href="/listar_pedidos"><i class="fas fa-clipboard-list"></i> Listar Pedidos</a>
+        <a href="/processo_bancada"><i class="fas fa-cogs"></i> Processo</a>
+        <a href="/"><i class="fas fa-home"></i> Página Inicial</a>
+    </div>
+
+    <!-- BOTÃO DE MENU -->
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
+
+    <script src="/js/statusConexao.js"></script>
     <!-- SCRIPT JS -->
     <script>
+        // Funções do menu flutuante
+        function toggleMenu() {
+            const menu = document.getElementById("menuFlutuante");
+            menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+    
+            const links = menu.querySelectorAll("a");
+            links.forEach(link => {
+                link.classList.toggle("active", menu.style.display === "flex");
+            });
+        }
+    
+        // Função que carrega os dados via /expedicao/valores-expedicao e atualiza a grid
+        async function carregarExpedicaoViaValores() {
+            try {
+                const response = await fetch('/expedicao/valores-expedicao');
+                const data = await response.json();
+                const grid = document.getElementById('expedicao-grid');
+                grid.innerHTML = '';
+    
+                for (let i = 1; i <= 12; i++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('expedicao-cell');
+                    cell.dataset.position = i;
+    
+                    const key = `P${i}`;
+                    const pedidoRaw = data[key];
+                    const pedido = Number(pedidoRaw);
+    
+                    if (!isNaN(pedido) && pedido > 0) {
+                        cell.classList.add('expedicao-ocupada');
+                        cell.textContent = `Pedido: ${pedido}`;
+                    } else {
+                        cell.classList.add('expedicao-vazia');
+                        cell.textContent = `Posição ${i}`;
+                    }
+    
+                    cell.addEventListener('click', () => editarPosicaoExpedicao(cell, i));
+                    grid.appendChild(cell);
+                }
+            } catch (erro) {
+                console.error('Erro ao carregar via valores-expedicao:', erro);
+                alert('Erro ao carregar expedição atualizada.');
+            }
+        }
+    
+        // Função para editar a posição da expedição
+        function editarPosicaoExpedicao(cell, position) {
+            const currentValue = cell.classList.contains('expedicao-ocupada') ?
+                parseInt(cell.textContent.replace('Pedido: ', '')) : null;
+    
+            const novoPedido = prompt('Digite o número do pedido para esta posição:', currentValue || '');
+    
+            if (novoPedido !== null) {
+                if (novoPedido.trim() === '') {
+                    // Limpar posição
+                    cell.classList.remove('expedicao-ocupada');
+                    cell.classList.add('expedicao-vazia');
+                    cell.textContent = `Posição ${position}`;
+                } else if (!isNaN(novoPedido)) {
+                    // Atualizar com novo pedido
+                    cell.classList.remove('expedicao-vazia');
+                    cell.classList.add('expedicao-ocupada');
+                    cell.textContent = `Pedido: ${novoPedido}`;
+                } else {
+                    alert('Por favor, digite um número válido para o pedido.');
+                }
+            }
+        }
+    
+        // Função para atualizar os dados da expedição no servidor
+        async function updateExpedicao() {
+            const grid = document.getElementById('expedicao-grid');
+            const cells = grid.querySelectorAll('.expedicao-cell');
+            const expedicaoData = [];
+    
+            cells.forEach(cell => {
+                const posicao = parseInt(cell.dataset.position);
+                const isOcupada = cell.classList.contains('expedicao-ocupada');
+    
+                if (isOcupada) {
+                    const orderNumber = parseInt(cell.textContent.replace('Pedido: ', ''));
+                    expedicaoData.push({
+                        posicaoExpedicao: posicao,
+                        orderNumber: orderNumber
+                    });
+                }
+            });
+    
+            try {
+                const response = await fetch('/expedicao/corrigirExpedicao', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(expedicaoData)
+                });
+    
+                return response.ok;
+            } catch (error) {
+                console.error('Erro ao atualizar expedição:', error);
+                return false;
+            }
+        }
+    
+        // Função para enviar dados para o CLP de expedição
+        async function enviarParaClpExpedicao() {
+            const ipsBancada = JSON.parse(sessionStorage.getItem('ipsBancada'));
+            const ipClp = ipsBancada ? ipsBancada.expedicao : null;
+            try {
+                const response = await fetch("/clp/enviar-expedicao", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ ipClp: ipClp })
+                });
+    
+                return response.ok;
+            } catch (erro) {
+                console.error("Erro ao enviar para CLP:", erro);
+                return false;
+            }
+        }
+    
+        // Evento de clique no botão Salvar Expedição
+        document.getElementById('atualizar-expedicao').addEventListener('click', async () => {
+            const expedicaoAtualizada = await updateExpedicao();
+    
+            if (expedicaoAtualizada) {
+                const clpAtualizado = await enviarParaClpExpedicao();
+    
+                if (clpAtualizado) {
+                    alert('Expedição atualizada e enviada para o CLP com sucesso!');
+                } else {
+                    alert('Expedição atualizada, mas falha ao enviar para CLP!');
+                }
+    
+                await carregarExpedicaoViaValores();
+            } else {
+                alert('Falha ao atualizar expedição!');
+            }
+        });
+    
+        // Botão de atualizar (recarrega os dados via /expedicao/valores-expedicao)
+        document.getElementById('atualizar').addEventListener('click', async () => {
+            await carregarExpedicaoViaValores();
+        });
+    
+        // Carrega os dados ao abrir a página, usando /expedicao/valores-expedicao
         const grid = document.getElementById('clp1-grid');
         const byteArray = new Array(28).fill(0);
 
@@ -306,9 +574,12 @@
                 }
             });
         });
+
+        window.addEventListener('load', carregarExpedicaoViaValores);
     </script>
 
-    <script src="/js/statusConexao.js"></script>
+
+<script src="/js/statusConexao.js"></script>
 </body>
 
 </html>

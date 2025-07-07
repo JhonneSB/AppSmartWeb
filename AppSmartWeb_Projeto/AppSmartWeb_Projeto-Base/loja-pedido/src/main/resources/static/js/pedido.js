@@ -58,8 +58,8 @@ function renderBlocos() {
             </div>
             <div class="input-combo">
                 <div class="input-box">
-                    <label for="l1-color-${nBloco}">Cor Lâmina 1</label>
-                    <select name="l1-color-${nBloco}" id="l1-color-${nBloco}" disabled onchange="changePedidoView(${nBloco}, this.value)">
+                    <label for="l3-color-${nBloco}">Cor Lâmina 1</label>
+                    <select name="l3-color-${nBloco}" id="l3-color-${nBloco}" disabled onchange="changePedidoView(${nBloco}, this.value)">
                         <option value="" hidden selected>Selecione</option>
                         <option value="1">Vermelho</option>
                         <option value="2">Azul</option>
@@ -70,8 +70,8 @@ function renderBlocos() {
                     </select>
                 </div>
                 <div class="input-box">
-                    <label for="l1-pattern-${nBloco}">Padrão Lâmina 1</label>
-                    <select name="l1-pattern-${nBloco}" id="l1-pattern-${nBloco}" disabled onchange="changePedidoView(${nBloco}, this.value)">
+                    <label for="l3-pattern-${nBloco}">Padrão Lâmina 1</label>
+                    <select name="l3-pattern-${nBloco}" id="l3-pattern-${nBloco}" disabled onchange="changePedidoView(${nBloco}, this.value)">
                         <option value="" hidden selected>Selecione</option>
                         <option value="0">Nenhum</option>
                         <option value="1">Casa</option>
@@ -106,8 +106,8 @@ function renderBlocos() {
             </div>
             <div class="input-combo">
                 <div class="input-box">
-                    <label for="l3-color-${nBloco}">Cor Lâmina 3</label>
-                    <select name="l3-color-${nBloco}" id="l3-color-${nBloco}" disabled onchange="changePedidoView(${nBloco}, this.value)">
+                    <label for="l1-color-${nBloco}">Cor Lâmina 3</label>
+                    <select name="l1-color-${nBloco}" id="l1-color-${nBloco}" disabled onchange="changePedidoView(${nBloco}, this.value)">
                         <option value="" hidden selected>Selecione</option>
                         <option value="1">Vermelho</option>
                         <option value="2">Azul</option>
@@ -118,8 +118,8 @@ function renderBlocos() {
                     </select>
                 </div>
                 <div class="input-box">
-                    <label for="l3-pattern-${nBloco}">Padrão Lâmina 3</label>
-                    <select name="l3-pattern-${nBloco}" id="l3-pattern-${nBloco}" disabled onchange="changePedidoView(${nBloco}, this.value)">
+                    <label for="l1-pattern-${nBloco}">Padrão Lâmina 3</label>
+                    <select name="l1-pattern-${nBloco}" id="l1-pattern-${nBloco}" disabled onchange="changePedidoView(${nBloco}, this.value)">
                         <option value="" hidden selected>Selecione</option>
                         <option value="0">Nenhum</option>
                         <option value="1">Casa</option>
@@ -127,6 +127,7 @@ function renderBlocos() {
                         <option value="3">Estrela</option>
                     </select>
                 </div>
+                
             </div>
         `;
 
