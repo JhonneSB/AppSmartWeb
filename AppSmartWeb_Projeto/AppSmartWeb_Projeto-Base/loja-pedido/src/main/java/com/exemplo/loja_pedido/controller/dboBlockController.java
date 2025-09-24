@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exemplo.loja_pedido.model.Estoque;
-import com.exemplo.loja_pedido.service.EstoqueService;
+import com.exemplo.loja_pedido.service.estoqueService;
 
 @Controller
 public class dboBlockController {
 
     @Autowired
-    private EstoqueService dboBlockService;
+    private estoqueService dboBlockService;
 
     // View for corrigirEstoque
     @GetMapping("/corrigirEstoque")

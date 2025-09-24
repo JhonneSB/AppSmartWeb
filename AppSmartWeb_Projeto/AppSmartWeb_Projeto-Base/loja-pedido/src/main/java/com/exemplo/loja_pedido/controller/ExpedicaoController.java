@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exemplo.loja_pedido.model.Expedicao;
 import com.exemplo.loja_pedido.repository.ExpedicaoRepository;
-import com.exemplo.loja_pedido.service.ExpedicaoService;
+import com.exemplo.loja_pedido.service.expedicaoService;
 
 @Controller
 @RequestMapping("/expedicao")
@@ -24,7 +24,7 @@ public class ExpedicaoController {
     @Autowired
     private ExpedicaoRepository expedicaoRepository;
     @Autowired
-    private ExpedicaoService expedicaoService;
+    private expedicaoService expedicaoService;
 
     @GetMapping
     @ResponseBody
