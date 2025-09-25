@@ -150,7 +150,14 @@ function verBlocosMontados() {
     }
 
     document.getElementById("divAlturaTampa").style.zIndex = "23";
-    document.getElementById("tampa").src = andares ? "assets/bloco/rTampa1.png" : "assets/bloco/rBlocoCor0.png";
+    if(document.getElementById("tampaPedido").value == 1){
+        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa1.png" : "assets/bloco/rBlocoCor0.png";
+    } else if(document.getElementById("tampaPedido").value == 2){
+        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa2.png" : "assets/bloco/rBlocoCor0.png";
+    } else if(document.getElementById("tampaPedido").value == 3){
+        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa3.png" : "assets/bloco/rBlocoCor0.png";
+    }
+
 
     function aplicarFiltroPadrao(padraoElement, corLamina) {
         if (corLamina === "5" || corLamina === "preto") {
@@ -645,8 +652,15 @@ function renderizarBlocoUnico(pedido, pedidoIndex) {
 
     const tampaImg = document.createElement('img');
     tampaImg.className = 'imagemBlocoMontado';
-    tampaImg.id = `pedido-${pedidoIndex}-tampa`;
-    tampaImg.src = 'assets/bloco/rTampa1.png';
+    tampaImg.id = `pedido-${pedidoIndex}-tampa`;;
+    if(document.getElementById("tampaPedido").value == 1){
+        tampaImg.src = 'assets/bloco/rTampa1.png';
+    } else if(document.getElementById("tampaPedido").value == 2){
+        tampaImg.src = 'assets/bloco/rTampa2.png';
+    } else if(document.getElementById("tampaPedido").value == 3){
+        tampaImg.src = 'assets/bloco/rTampa3.png';
+    }
+
     tampaImg.alt = 'tampa';
     tampaDiv.appendChild(tampaImg);
     
