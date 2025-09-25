@@ -80,9 +80,9 @@ public class SmartController {
             System.out.println();
 
             // Envia os bytes para o IP informado:
-            smartService.enviarBlocoBytesAoClp(ipClp, 9, 2, bytePedidoArray, bytePedidoArray.length);
+           // smartService.enviarBlocoBytesAoClp(ipClp, 9, 2, bytePedidoArray, bytePedidoArray.length);
             // Executa o pedido
-            smartService.iniciarExecucaoPedido(ipClp);
+           // smartService.iniciarExecucaoPedido(ipClp);
 
             return ResponseEntity.ok("Pedido enviado ao CLP com sucesso.");
         } catch (Exception e) {

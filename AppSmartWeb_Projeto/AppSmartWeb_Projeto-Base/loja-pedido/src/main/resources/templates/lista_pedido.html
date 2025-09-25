@@ -49,6 +49,14 @@
                             th:text="${pedido.tipo == 'simples' ? 'Simples' : pedido.tipo == 'duplo' ? 'Duplo' : 'Triplo'}"></span>
                     </div>
 
+                    <div class="tampa-info">
+                        <span class="material-symbols-rounded">roofing</span>
+                        Tampa: 
+                        <span class="pedido-tampa" th:text="${pedido.tampa == 1 ? 'Preto' : 
+                                                              pedido.tampa == 2 ? 'Vermelho' : 
+                                                              pedido.tampa == 3 ? 'Azul' : 'Não definida'}"></span>
+                        <span class="tampa-value" th:text="${pedido.tampa}" style="display: none;"></span>
+
                     <div class="blocos-container">
                         <div th:each="bloco, stat : ${pedido.blocos}" class="bloco-item">
                             <h4>Bloco <span th:text="${stat.count}"></span> - Cor:
@@ -125,112 +133,145 @@
 
     <script>
 
-        function executarPedido(pedidoId) {
-            // Pegar o IP do estoque do localStorage
-            const ipsBancada = JSON.parse(sessionStorage.getItem('ipsBancada'));
-            const ipClp = ipsBancada ? ipsBancada.estoque : null;
-            console.log(ipClp); // ou usar um log formatado
+function executarPedido(pedidoId) {
+    // Pegar o IP do estoque do localStorage
+    const ipsBancada = JSON.parse(sessionStorage.getItem('ipsBancada'));
+    const ipClp = ipsBancada ? ipsBancada.estoque : null;
+    console.log(ipClp);
 
-            if (!ipClp) {
-                alert("Por favor, configure o IP do CLP de estoque nas configurações.");
-                return;
-            }
+    if (!ipClp) {
+        alert("Por favor, configure o IP do CLP de estoque nas configurações.");
+        return;
+    }
 
-            // Encontrar o card do pedido clicado
-            const pedidoCard = document.querySelector(`.pedido-card [data-id="${pedidoId}"]`)?.closest('.pedido-card');
-            if (!pedidoCard) {
-                alert("Pedido não encontrado.");
-                return;
-            }
+    // Encontrar o card do pedido clicado
+    const pedidoCard = document.querySelector(`.pedido-card [data-id="${pedidoId}"]`)?.closest('.pedido-card');
+    if (!pedidoCard) {
+        alert("Pedido não encontrado.");
+        return;
+    }
 
-            // Extrair os dados do pedido do card
-            const tipo = pedidoCard.querySelector('.pedido-tipo').textContent.toLowerCase();
-            const blocos = [];
-
-            // Processar cada bloco do pedido
-            pedidoCard.querySelectorAll('.bloco-item').forEach((blocoElement, index) => {
-                const corBlocoText = blocoElement.querySelector('h4').textContent;
-                let corBloco = 3; // Padrão azul
-
-                if (corBlocoText.includes('Preto')) {
-                    corBloco = 1;
-                } else if (corBlocoText.includes('Vermelho')) {
-                    corBloco = 2;
-                }
-
-                const bloco = {
-                    andar: index + 1,
-                    cor: corBloco,  // mudou aqui!
-                    laminas: []
-                };
-
-                // Processar cada lâmina do bloco
-                blocoElement.querySelectorAll('.lamina-item').forEach(laminaElement => {
-                    const corText = laminaElement.textContent.trim();
-                    let cor = '1'; // Padrão vermelho
-
-                    if (corText.includes('Azul')) {
-                        cor = '2';
-                    } else if (corText.includes('Amarelo')) {
-                        cor = '3';
-                    } else if (corText.includes('Verde')) {
-                        cor = '4';
-                    } else if (corText.includes('Preto')) {
-                        cor = '5';
-                    } else if (corText.includes('Branco')) {
-                        cor = '6';
-                    }
-
-                    // Extrair padrão se existir
-                    const padraoElement = laminaElement.querySelector('.lamina-padrao');
-                    let padrao = '0';
-
-                    if (padraoElement) {
-                        const padraoText = padraoElement.textContent;
-                        if (padraoText.includes('Casa')) {
-                            padrao = '1';
-                        } else if (padraoText.includes('Navio')) {
-                            padrao = '2';
-                        } else if (padraoText.includes('Estrela')) {
-                            padrao = '3';
-                        }
-                    }
-
-                    bloco.laminas.push({
-                        numero: bloco.laminas.length + 1,
-                        cor: cor,
-                        padrao: padrao
-                    });
-                });
-
-                blocos.push(bloco);
-            });
-
-            const pedidoDTO = {
-                tipo: tipo,
-                ipClp: ipClp,
-                blocos: blocos
-            };
-
-            fetch("/iniciar-pedido", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(pedidoDTO)
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert("Pedido executado com sucesso!");
-                    } else {
-                        alert("Erro ao executar pedido.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Erro na requisição:", error);
-                    alert("Erro na comunicação com o servidor.");
-                });
+    // Extrair os dados do pedido do card - INCLUINDO A TAMPA
+    const tipo = pedidoCard.querySelector('.pedido-tipo').textContent.toLowerCase();
+    
+    // Extrair a tampa do pedido (assumindo que está armazenada no card)
+    const tampaElement = pedidoCard.querySelector('.pedido-tampa'); // Ajuste o seletor conforme seu HTML
+    let tampa = 1; // Valor padrão se não encontrar
+    
+    if (tampaElement) {
+        const tampaText = tampaElement.textContent.toLowerCase();
+        if (tampaText.includes('preto') || tampaText.includes('1')) {
+            tampa = 1;
+        } else if (tampaText.includes('vermelho') || tampaText.includes('2')) {
+            tampa = 2;
+        } else if (tampaText.includes('azul') || tampaText.includes('3')) {
+            tampa = 3;
         }
+    }
+
+    const blocos = [];
+
+    // Processar cada bloco do pedido
+    pedidoCard.querySelectorAll('.bloco-item').forEach((blocoElement, index) => {
+        const corBlocoText = blocoElement.querySelector('h4').textContent;
+        let corBloco = 3; // Padrão azul
+
+        if (corBlocoText.includes('Preto')) {
+            corBloco = 1;
+        } else if (corBlocoText.includes('Vermelho')) {
+            corBloco = 2;
+        }
+
+        const bloco = {
+            andar: index + 1,
+            cor: corBloco,
+            laminas: []
+        };
+
+        // Processar cada lâmina do bloco
+        blocoElement.querySelectorAll('.lamina-item').forEach(laminaElement => {
+            const corText = laminaElement.textContent.trim();
+            let cor = '1'; // Padrão vermelho
+
+            if (corText.includes('Azul')) {
+                cor = '2';
+            } else if (corText.includes('Amarelo')) {
+                cor = '3';
+            } else if (corText.includes('Verde')) {
+                cor = '4';
+            } else if (corText.includes('Preto')) {
+                cor = '5';
+            } else if (corText.includes('Branco')) {
+                cor = '6';
+            }
+
+            // Extrair padrão se existir
+            const padraoElement = laminaElement.querySelector('.lamina-padrao');
+            let padrao = '0';
+
+            if (padraoElement) {
+                const padraoText = padraoElement.textContent;
+                if (padraoText.includes('Casa')) {
+                    padrao = '1';
+                } else if (padraoText.includes('Navio')) {
+                    padrao = '2';
+                } else if (padraoText.includes('Estrela')) {
+                    padrao = '3';
+                }
+            }
+
+            bloco.laminas.push({
+                numero: bloco.laminas.length + 1,
+                cor: cor,
+                padrao: padrao
+            });
+        });
+
+        blocos.push(bloco);
+    });
+
+    // Primeiro: Executar o movimento da tampa
+    const urlTampa = `http://10.74.241.193/api/move_pos?pos=${tampa}`;
+    
+    fetch(urlTampa, {
+        method: "POST"
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Erro ao mover tampa para posição ${tampa}`);
+        }
+        return response.text(); // ou response.json() dependendo da API
+    })
+    .then(result => {
+        console.log(`Tampa movida para posição ${tampa} com sucesso:`, result);
+        
+        // Segundo: Executar o pedido principal apenas se o movimento da tampa foi OK
+        const pedidoDTO = {
+            tipo: tipo,
+            ipClp: ipClp,
+            blocos: blocos
+        };
+
+        return fetch("/iniciar-pedido", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(pedidoDTO)
+        });
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("Pedido executado com sucesso!");
+        } else {
+            alert("Erro ao executar pedido.");
+        }
+    })
+    .catch(error => {
+        console.error("Erro:", error);
+        alert(`Erro: ${error.message}`);
+    });
+}
 
         function toggleMenu() {
             const menu = document.getElementById("menuFlutuante");

@@ -5,6 +5,7 @@ import java.util.List;
 public class PedidoDTO {
     private String ipClp;
     private String tipo;
+    private Integer tampa;
     private List<BlocoDTO> blocos;
 
     // Getters e Setters
@@ -14,6 +15,12 @@ public class PedidoDTO {
     }
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+    public Integer getTampa() {
+        return tampa;
+    }
+    public void setTampa(Integer tampa) {
+        this.tampa = tampa;
     }
     public List<BlocoDTO> getBlocos() {
         return blocos;

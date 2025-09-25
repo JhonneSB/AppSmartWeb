@@ -26,6 +26,8 @@ public class Pedido {
 
     private Integer orderProduction;  // <- campo para ordem de produção
     
+    private Integer  tampa;  // <- novo campo para tampa
+    
     // Getters e Setters
     
     public Long getId() {
@@ -60,5 +62,11 @@ public class Pedido {
         this.blocos = blocos;
     }
 
-    
+    public Integer getTampa() {
+        return tampa;
+    }
+
+    public void setTampa(Integer tampa) {
+        this.tampa = tampa;
+    }
 }

@@ -469,6 +469,7 @@ function spinBlocoMontado() {
 // Envia pedido para a base de dados
 function enviarPedido() {
     const tipo = document.getElementById("tipoPedido").value;
+    const tampa = document.getElementById("tampaPedido").value;
     const blocos = document.querySelectorAll(".bloco[id^='bloco-container-']"); // More specific selector
 
     // Validate if there are blocks
@@ -477,8 +478,11 @@ function enviarPedido() {
         return;
     }
 
+    console.log(tampa);
+
     const pedido = {
         tipo: tipo,
+        tampa: Number(tampa), // Converte string para int
         blocos: []
     };
 

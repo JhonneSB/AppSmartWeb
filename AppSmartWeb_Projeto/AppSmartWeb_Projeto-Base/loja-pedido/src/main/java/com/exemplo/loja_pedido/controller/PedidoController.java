@@ -56,6 +56,7 @@ public class PedidoController {
 
             Pedido pedido = new Pedido();
             pedido.setTipo(pedidoDTO.getTipo());
+            pedido.setTampa(pedidoDTO.getTampa());
 
             List<Bloco> blocos = pedidoDTO.getBlocos().stream().map(blocoDTO -> {
                 Bloco bloco = new Bloco();
