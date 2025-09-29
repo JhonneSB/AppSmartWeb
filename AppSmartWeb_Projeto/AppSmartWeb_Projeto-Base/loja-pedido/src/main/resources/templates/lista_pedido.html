@@ -231,7 +231,7 @@ function executarPedido(pedidoId) {
     });
 
     // Primeiro: Executar o movimento da tampa
-    const urlTampa = `http://10.74.241.193/api/move_pos?pos=${tampa}`;
+    const urlTampa = `http://10.74.241.207/api/move_pos?pos=${tampa}`;
     
     fetch(urlTampa, {
         method: "POST"

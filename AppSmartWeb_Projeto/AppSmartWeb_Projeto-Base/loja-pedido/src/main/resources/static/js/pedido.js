@@ -150,14 +150,16 @@ function verBlocosMontados() {
     }
 
     document.getElementById("divAlturaTampa").style.zIndex = "23";
-    if(document.getElementById("tampaPedido").value == 1){
+    
+    // Atualiza apenas a tampa sem afetar os blocos
+    const tampaValue = document.getElementById("tampaPedido").value;
+    if(tampaValue == 1){
         document.getElementById("tampa").src = andares ? "assets/bloco/rTampa1.png" : "assets/bloco/rBlocoCor0.png";
-    } else if(document.getElementById("tampaPedido").value == 2){
+    } else if(tampaValue == 2){
         document.getElementById("tampa").src = andares ? "assets/bloco/rTampa2.png" : "assets/bloco/rBlocoCor0.png";
-    } else if(document.getElementById("tampaPedido").value == 3){
+    } else if(tampaValue == 3){
         document.getElementById("tampa").src = andares ? "assets/bloco/rTampa3.png" : "assets/bloco/rBlocoCor0.png";
     }
-
 
     function aplicarFiltroPadrao(padraoElement, corLamina) {
         if (corLamina === "5" || corLamina === "preto") {
@@ -171,6 +173,7 @@ function verBlocosMontados() {
             padraoElement.style.contrast = "100%";
         }
     }
+    
     const setBlockColor = (num) => {
         const block = document.getElementById(`block-color-${num}`);
         if (block) {
@@ -274,6 +277,7 @@ function verBlocosMontados() {
         });
     }
 }
+
 // Atualiza a visualização do pedido
 function changePedidoView(id, lamina) {
     const blockColor = document.getElementById("block-color-" + id).value;
@@ -309,8 +313,6 @@ function changePedidoView(id, lamina) {
         if (l3Color === "3") {
             aplicarFiltroPadrao(document.getElementById("padrao" + id + "-3"), l3Color);
         }
-
-
 
         const l1Pattern = document.getElementById("l1-pattern-" + id).value;
         const l2Pattern = document.getElementById("l2-pattern-" + id).value;
@@ -465,7 +467,6 @@ function spinBlocoMontado() {
     verBlocosMontados();
 }
 
-// Envia pedido para a base de dados
 // Envia pedido para a base de dados
 function enviarPedido() {
     const tipo = document.getElementById("tipoPedido").value;
@@ -772,9 +773,6 @@ function criarBotaoGiro(pedidoIndex) {
     return button;
 }
 
-
-
-
 function spinBlocoUnico(pedidoIndex) {
     const view = document.getElementById(`pedido-${pedidoIndex}-viewBlocoMontado`);
     view.classList.toggle("spinAtivo");
@@ -851,6 +849,24 @@ function spinBlocoUnico(pedidoIndex) {
     });
 }
 
+// Função para atualizar apenas a tampa sem resetar as configurações
+function atualizarTampa() {
+    const tipo = document.getElementById("tipoPedido").value;
+    const andares = tipo === "simples" ? 1 : tipo === "duplo" ? 2 : 3;
+    const tampaValue = document.getElementById("tampaPedido").value;
+    
+    // Atualiza apenas a tampa
+    if(tampaValue == 1){
+        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa1.png" : "assets/bloco/rBlocoCor0.png";
+    } else if(tampaValue == 2){
+        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa2.png" : "assets/bloco/rBlocoCor0.png";
+    } else if(tampaValue == 3){
+        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa3.png" : "assets/bloco/rBlocoCor0.png";
+    }
+    
+    // NÃO chama verBlocosMontados() para evitar reset das configurações
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("blocosContainer") && document.getElementById("tipoPedido")) {
         renderBlocos();
@@ -858,6 +874,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (document.getElementById("listaPedidos")) {
         listarPedidos();
+    }
+    
+    // Adiciona event listener para a tampa que não reseta as configurações
+    const tampaSelect = document.getElementById("tampaPedido");
+    if (tampaSelect) {
+        tampaSelect.addEventListener("change", atualizarTampa);
     }
 });
 window.onload = renderBlocos;
