@@ -152,14 +152,7 @@ function verBlocosMontados() {
     document.getElementById("divAlturaTampa").style.zIndex = "23";
     
     // Atualiza apenas a tampa sem afetar os blocos
-    const tampaValue = document.getElementById("tampaPedido").value;
-    if(tampaValue == 1){
-        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa1.png" : "assets/bloco/rBlocoCor0.png";
-    } else if(tampaValue == 2){
-        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa2.png" : "assets/bloco/rBlocoCor0.png";
-    } else if(tampaValue == 3){
-        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa3.png" : "assets/bloco/rBlocoCor0.png";
-    }
+    atualizarTampaVisualizacao();
 
     function aplicarFiltroPadrao(padraoElement, corLamina) {
         if (corLamina === "5" || corLamina === "preto") {
@@ -275,6 +268,21 @@ function verBlocosMontados() {
                 }
             }
         });
+    }
+}
+
+// Função para atualizar apenas a visualização da tampa
+function atualizarTampaVisualizacao() {
+    const tipo = document.getElementById("tipoPedido").value;
+    const andares = tipo === "simples" ? 1 : tipo === "duplo" ? 2 : 3;
+    const tampaValue = document.getElementById("tampaPedido").value;
+    
+    if(tampaValue == 1){
+        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa1.png" : "assets/bloco/rBlocoCor0.png";
+    } else if(tampaValue == 2){
+        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa2.png" : "assets/bloco/rBlocoCor0.png";
+    } else if(tampaValue == 3){
+        document.getElementById("tampa").src = andares ? "assets/bloco/rTampa3.png" : "assets/bloco/rBlocoCor0.png";
     }
 }
 
@@ -855,7 +863,7 @@ function atualizarTampa() {
     const andares = tipo === "simples" ? 1 : tipo === "duplo" ? 2 : 3;
     const tampaValue = document.getElementById("tampaPedido").value;
     
-    // Atualiza apenas a tampa
+    // Atualiza apenas a tampa sem chamar verBlocosMontados()
     if(tampaValue == 1){
         document.getElementById("tampa").src = andares ? "assets/bloco/rTampa1.png" : "assets/bloco/rBlocoCor0.png";
     } else if(tampaValue == 2){
