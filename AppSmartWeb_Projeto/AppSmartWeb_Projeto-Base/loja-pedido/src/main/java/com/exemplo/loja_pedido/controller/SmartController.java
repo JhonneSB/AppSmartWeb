@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.exemplo.loja_pedido.dto.BlocoDTO;
 import com.exemplo.loja_pedido.dto.LaminaDTO;
@@ -38,10 +39,10 @@ public class SmartController {
     private final ScheduledExecutorService leituraExecutor = Executors.newScheduledThreadPool(4);
     private final Map<String, ScheduledFuture<?>> leituraFutures = new ConcurrentHashMap<>();
 
-     private static byte[] dadosClp1;
-     private static byte[] dadosClp2;
-     private static byte[] dadosClp3;
-     private static byte[] dadosClp4;
+    private static byte[] dadosClp1;
+    private static byte[] dadosClp2;
+    private static byte[] dadosClp3;
+    private static byte[] dadosClp4;
     @Autowired
     private SmartService smartService;
 
@@ -58,33 +59,45 @@ public class SmartController {
     public ResponseEntity<String> iniciarPedido(@RequestBody PedidoDTO pedidoDTO) {
         String ipClp = pedidoDTO.getIpClp();
         List<BlocoDTO> pedido = pedidoDTO.getBlocos();
-
-        System.out.println("Pedido recebido para IP do CLP: " + ipClp);
-        for (BlocoDTO bloco : pedido) {
-            System.out.println("Andar: " + bloco.getAndar() + ", Cor do Bloco: " + bloco.getCor());
-            int i = 1;
-            for (LaminaDTO lamina : bloco.getLaminas()) {
-                System.out.println("  Lâmina-" + i + ": Cor = " + lamina.getCor() + ", Padrão = " + lamina.getPadrao());
-                i++;
+    
+        // Primeiro: mover a tampa
+        try {
+            String urlTampa = "http://10.74.241.245/api/move_pos?pos=" + pedidoDTO.getTampa();
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.getForEntity(urlTampa, String.class);
+            
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Erro ao mover tampa: Resposta HTTP " + response.getStatusCode());
             }
+            
+            System.out.println("Tampa movida para posição " + pedidoDTO.getTampa() + ": " + response.getBody());
+        } catch (Exception e) {
+            System.err.println("Erro ao mover tampa: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao mover tampa: " + e.getMessage());
         }
-
+    
+        // Processamento do pedido...
         try {
             byte[] bytePedidoArray = montarPedidoParaCLP(pedido);
-
-            // Impressão em hexadecimal:
+    
             System.out.print("Bytes do pedido em hexadecimal: ");
             for (byte b : bytePedidoArray) {
                 System.out.printf("%02X ", b);
             }
             System.out.println();
-
-            // Envia os bytes para o IP informado:
-           // smartService.enviarBlocoBytesAoClp(ipClp, 9, 2, bytePedidoArray, bytePedidoArray.length);
-            // Executa o pedido
-           // smartService.iniciarExecucaoPedido(ipClp);
-
-            return ResponseEntity.ok("Pedido enviado ao CLP com sucesso.");
+    
+            // Envia os bytes para o CLP - se der exception, vai para o catch
+            smartService.enviarBlocoBytesAoClp(ipClp, 9, 2, bytePedidoArray, bytePedidoArray.length);
+            System.out.println("✅ Bytes enviados para o CLP com sucesso");
+    
+            // Executa o pedido - se der exception, vai para o catch
+            smartService.iniciarExecucaoPedido(ipClp);
+            System.out.println("✅ Pedido iniciado no CLP com sucesso");
+    
+            return ResponseEntity.ok("Pedido enviado e iniciado no CLP com sucesso.");
+    
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -104,10 +117,10 @@ public class SmartController {
                     if (pos >= 1 && pos <= 28) {
                         byteBlocosArray[pos - 1] = valor.byteValue();
 
-                        Estoque estoque = estoqueRepository.findByPosition((short)pos)
+                        Estoque estoque = estoqueRepository.findByPosition((short) pos)
                                 .orElseGet(() -> {
                                     Estoque novo = new Estoque();
-                                    novo.setPosition((short)pos);
+                                    novo.setPosition((short) pos);
                                     return novo;
                                 });
 
@@ -136,7 +149,7 @@ public class SmartController {
                 try {
                     int pos = Integer.parseInt(posStr.split(":")[1]); // ex: "OP:3" → 3
                     Short posShort = (short) pos;
-                    
+
                     if (pos >= 1 && pos <= 12) {
                         if (valor == 0) {
                             expedicaoRepository.findByPosicaoExpedicao(posShort).ifPresent(expedicaoRepository::delete);
@@ -145,7 +158,7 @@ public class SmartController {
                             Expedicao exp = expedicaoRepository
                                     .findByPosicaoExpedicao(posShort)
                                     .orElseGet(Expedicao::new);
-                    
+
                             exp.setPosicaoExpedicao(posShort);
                             exp.setOrderNumber(valor);
                             expedicaoRepository.save(exp);
@@ -220,12 +233,12 @@ public class SmartController {
 
             for (Expedicao e : listaExpedicao) {
                 int pos = e.getPosicaoExpedicao(); // posição de 1 a 12
-                int valor = e.getOrderNumber();    // valor do pedido
+                int valor = e.getOrderNumber(); // valor do pedido
 
                 if (pos >= 1 && pos <= 12) {
                     int index = (pos - 1) * 2;
-                    byteBlocosArray[index] = (byte) (valor >> 8);       // High byte
-                    byteBlocosArray[index + 1] = (byte) (valor & 0xFF);     // Low byte
+                    byteBlocosArray[index] = (byte) (valor >> 8); // High byte
+                    byteBlocosArray[index + 1] = (byte) (valor & 0xFF); // Low byte
                 }
             }
 
@@ -263,14 +276,14 @@ public class SmartController {
                         byteBlocosArray[pos - 1] = valor.byteValue();
 
                         // Persistência no banco de dados
-                        Estoque estoque = estoqueRepository.findByPosition((short)pos)
+                        Estoque estoque = estoqueRepository.findByPosition((short) pos)
                                 .orElseGet(() -> {
                                     Estoque novo = new Estoque();
-                                    novo.setPosition((short)pos);
+                                    novo.setPosition((short) pos);
                                     return novo;
                                 });
-                                estoque.setColor(valor.shortValue());
-                                estoqueRepository.save(estoque);
+                        estoque.setColor(valor.shortValue());
+                        estoqueRepository.save(estoque);
                     }
                 } catch (Exception e) {
                     System.err.println("Erro ao processar posição: " + posStr + " - " + e.getMessage());
@@ -307,7 +320,7 @@ public class SmartController {
                     int pos = Integer.parseInt(posStr.split(":")[1]); // exemplo: "OP:3" → 3
                     if (pos >= 1 && pos <= 12) {
                         int index = (pos - 1) * 2;
-                        byteBlocosArray[index] = (byte) (valor >> 8);       // high byte
+                        byteBlocosArray[index] = (byte) (valor >> 8); // high byte
                         byteBlocosArray[index + 1] = (byte) (valor & 0xFF); // low byte
                     }
                 } catch (Exception e) {
